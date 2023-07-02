@@ -1,6 +1,6 @@
 package rechan
 
-import "git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/models"
+import "git.legchelife.ru/root/template/pkg/models"
 
 type Multiple struct {
 	Data   interface{}

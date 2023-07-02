@@ -2,7 +2,7 @@ package natsconnect
 
 import (
 	"context"
-	uc "git.legchelife.ru/gitlab-instance-7d441567/catalog_m/internal/usecase"
+	uc "git.legchelife.ru/root/template/internal/usecase"
 	"github.com/nats-io/nats.go"
 	"github.com/sirupsen/logrus"
 )

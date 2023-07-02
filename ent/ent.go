@@ -12,8 +12,8 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/task"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/user"
+	"git.legchelife.ru/root/template/ent/task"
+	"git.legchelife.ru/root/template/ent/user"
 )
 
 // ent aliases to avoid import conflicts in user's code.

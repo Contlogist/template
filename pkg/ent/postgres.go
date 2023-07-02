@@ -2,8 +2,8 @@ package ent
 
 import (
 	"context"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/config"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent"
+	"git.legchelife.ru/root/template/config"
+	"git.legchelife.ru/root/template/ent"
 	_ "github.com/lib/pq"
 	"log"
 )

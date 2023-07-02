@@ -1,8 +1,8 @@
 package service_module_component
 
 import (
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/models/context"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/models/rechan"
+	"git.legchelife.ru/root/template/pkg/models/context"
+	"git.legchelife.ru/root/template/pkg/models/rechan"
 	"github.com/sirupsen/logrus"
 )
 

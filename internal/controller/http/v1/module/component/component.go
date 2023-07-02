@@ -1,8 +1,8 @@
 package rt_module_component
 
 import (
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/models/context"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/models/response"
+	"git.legchelife.ru/root/template/pkg/models/context"
+	"git.legchelife.ru/root/template/pkg/models/response"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"net/http"

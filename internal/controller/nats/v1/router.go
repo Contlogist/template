@@ -3,8 +3,8 @@ package natsrouter
 import (
 	"encoding/json"
 	"errors"
-	uc "git.legchelife.ru/gitlab-instance-7d441567/catalog_m/internal/usecase"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/models/rechan"
+	uc "git.legchelife.ru/root/template/internal/usecase"
+	"git.legchelife.ru/root/template/pkg/models/rechan"
 	"github.com/nats-io/nats.go"
 )
 

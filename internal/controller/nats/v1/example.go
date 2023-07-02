@@ -2,8 +2,7 @@ package natsrouter
 
 import (
 	"errors"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/internal/usecase"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/models/rechan"
+	"git.legchelife.ru/root/template/pkg/models/rechan"
 )
 
 type exampleRoutes struct {

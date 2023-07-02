@@ -55,7 +55,7 @@ swag-v1: ### swag init
 run: swag-v1 ### swag run
 	swag init -g internal/controller/http/v1/router.go
 	go mod tidy && go mod download && \
-	go build git.legchelife.ru/gitlab-instance-7d441567/catalog_m/cmd/app
+	go build git.legchelife.ru/root/template/cmd/app
 	DISABLE_SWAGGER_HTTP_HANDLER='' GIN_MODE=debug CGO_ENABLED=0 go run -tags migrate ./cmd/app
 .PHONY: run
 

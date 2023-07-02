@@ -1,4 +1,4 @@
-module git.legchelife.ru/gitlab-instance-7d441567/catalog_m
+module git.legchelife.ru/root/template
 
 go 1.18
 

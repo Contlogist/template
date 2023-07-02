@@ -3,19 +3,19 @@ package app
 
 import (
 	"fmt"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/internal/repo/service"
-	uc "git.legchelife.ru/gitlab-instance-7d441567/catalog_m/internal/usecase"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/ent"
+	"git.legchelife.ru/root/template/internal/repo/service"
+	uc "git.legchelife.ru/root/template/internal/usecase"
+	"git.legchelife.ru/root/template/pkg/ent"
 	"os"
 	"os/signal"
 	"syscall"
 
 	"github.com/gin-gonic/gin"
 
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/config"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/internal/controller/http/v1"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/httpserver"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/logger"
+	"git.legchelife.ru/root/template/config"
+	"git.legchelife.ru/root/template/internal/controller/http/v1"
+	"git.legchelife.ru/root/template/pkg/httpserver"
+	"git.legchelife.ru/root/template/pkg/logger"
 )
 
 const (

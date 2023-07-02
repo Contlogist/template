@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/config"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/internal/app"
+	"git.legchelife.ru/root/template/config"
+	"git.legchelife.ru/root/template/internal/app"
 )
 
 func main() {

@@ -9,7 +9,7 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/task"
+	"git.legchelife.ru/root/template/ent/task"
 )
 
 // TaskCreate is the builder for creating a Task entity.

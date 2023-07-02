@@ -8,7 +8,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/task"
+	"git.legchelife.ru/root/template/ent/task"
 )
 
 // Task is the model entity for the Task schema.

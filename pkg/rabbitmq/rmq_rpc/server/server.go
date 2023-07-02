@@ -7,8 +7,8 @@ import (
 
 	"github.com/streadway/amqp"
 
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/logger"
-	rmqrpc "git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/rabbitmq/rmq_rpc"
+	"git.legchelife.ru/root/template/pkg/logger"
+	rmqrpc "git.legchelife.ru/root/template/pkg/rabbitmq/rmq_rpc"
 )
 
 const (

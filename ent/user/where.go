@@ -4,7 +4,7 @@ package user
 
 import (
 	"entgo.io/ent/dialect/sql"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/predicate"
+	"git.legchelife.ru/root/template/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.

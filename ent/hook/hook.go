@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent"
+	"git.legchelife.ru/root/template/ent"
 )
 
 // The TaskFunc type is an adapter to allow the use of ordinary

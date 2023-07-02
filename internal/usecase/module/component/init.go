@@ -1,7 +1,7 @@
 package uc_module_component
 
 import (
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/internal/repo/service"
+	"git.legchelife.ru/root/template/internal/repo/service"
 )
 
 type Repo struct {

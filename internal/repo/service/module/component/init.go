@@ -1,7 +1,7 @@
 package service_module_component
 
 import (
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent"
+	"git.legchelife.ru/root/template/ent"
 )
 
 type Component struct {

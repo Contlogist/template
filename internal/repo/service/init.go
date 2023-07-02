@@ -1,8 +1,8 @@
 package service
 
 import (
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent"
-	service_module "git.legchelife.ru/gitlab-instance-7d441567/catalog_m/internal/repo/service/module"
+	"git.legchelife.ru/root/template/ent"
+	service_module "git.legchelife.ru/root/template/internal/repo/service/module"
 )
 
 type Repo struct {

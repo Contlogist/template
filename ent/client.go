@@ -8,13 +8,13 @@ import (
 	"fmt"
 	"log"
 
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/migrate"
+	"git.legchelife.ru/root/template/ent/migrate"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/task"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/user"
+	"git.legchelife.ru/root/template/ent/task"
+	"git.legchelife.ru/root/template/ent/user"
 )
 
 // Client is the client that holds all ent builders.

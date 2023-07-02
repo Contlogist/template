@@ -1,9 +1,8 @@
 package rt_module_component
 
 import (
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/internal/usecase"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/logger"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/security"
+	"git.legchelife.ru/root/template/pkg/logger"
+	"git.legchelife.ru/root/template/pkg/security"
 	"github.com/gin-gonic/gin"
 )
 

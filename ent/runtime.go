@@ -3,9 +3,9 @@
 package ent
 
 import (
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/schema"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/task"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/user"
+	"git.legchelife.ru/root/template/ent/schema"
+	"git.legchelife.ru/root/template/ent/task"
+	"git.legchelife.ru/root/template/ent/user"
 )
 
 // The init function reads all schema descriptors with runtime code

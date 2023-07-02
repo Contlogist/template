@@ -5,12 +5,12 @@ package enttest
 import (
 	"context"
 
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent"
+	"git.legchelife.ru/root/template/ent"
 	// required by schema hooks.
-	_ "git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/runtime"
+	_ "git.legchelife.ru/root/template/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/migrate"
+	"git.legchelife.ru/root/template/ent/migrate"
 )
 
 type (

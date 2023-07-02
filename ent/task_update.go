@@ -10,8 +10,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/predicate"
-	"git.legchelife.ru/gitlab-instance-7d441567/catalog_m/ent/task"
+	"git.legchelife.ru/root/template/ent/predicate"
+	"git.legchelife.ru/root/template/ent/task"
 )
 
 // TaskUpdate is the builder for updating Task entities.

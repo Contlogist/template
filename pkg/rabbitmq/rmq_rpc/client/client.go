@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/streadway/amqp"
 
-	rmqrpc "git.legchelife.ru/gitlab-instance-7d441567/catalog_m/pkg/rabbitmq/rmq_rpc"
+	rmqrpc "git.legchelife.ru/root/template/pkg/rabbitmq/rmq_rpc"
 )
 
 // ErrConnectionClosed -.
