@@ -1,0 +1,52 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API для работы с каталогом и контентом сайта каталога",
+        "title": "CATALOG API123123",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:1000",
+    "basePath": "/v1",
+    "paths": {
+        "/module/block/get/test": {
+            "get": {
+                "security": [
+                    {
+                        "Token-A": []
+                    }
+                ],
+                "description": "Метод для получения списка категорий",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Catalog/Category"
+                ],
+                "summary": "getTest - получить категории",
+                "operationId": "module.block.get",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список категорий",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Возвращает ошибку",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Token-A": {
+            "type": "apiKey",
+            "name": "Token-A",
+            "in": "header"
+        }
+    }
+}

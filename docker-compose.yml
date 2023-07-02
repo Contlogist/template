@@ -1,0 +1,41 @@
+version: '3.9'
+services:
+
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'pass'
+      POSTGRES_DB: 'postgres'
+    ports:
+      - "5432:5432"
+
+#  nats:
+#    image: nats:latest
+#    ports:
+#      - "4222:4222"
+#      - "8222:8222"
+#      - "6222:6222"
+#    command: [ "--jetstream" ]
+
+#  app:
+#    build: .
+#    container_name: app
+#    image: app
+#    volumes:
+#      - /mnt/portal_files
+#    environment:
+#      ENT_PG_HOST: 'postgres'
+#      ENT_PG_PORT: '5432'
+#      ENT_PG_USER: 'user'
+#      ENT_PG_PASSWORD: 'pass'
+#      ENT_PG_DATABASE: 'postgres'
+##      PG_URL: 'postgres://user:pass@postgres:5432/postgres'
+##      SQL_URL: 'postgres://user:pass@postgres:5432/postgres'
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres
+#      - nats
