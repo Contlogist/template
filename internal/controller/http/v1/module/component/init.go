@@ -1,6 +1,7 @@
 package rt_module_component
 
 import (
+	uc "git.legchelife.ru/root/template/internal/usecase"
 	"git.legchelife.ru/root/template/pkg/logger"
 	"git.legchelife.ru/root/template/pkg/security"
 	"github.com/gin-gonic/gin"

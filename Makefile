@@ -8,20 +8,9 @@ HARBOR_ADDRESS:=harbor.legchelife.ru:8443
 DOCKER_IMAGE_NAME:=$(DOCKER_REPOSITORY)/$(NAME)
 VERSION:=$(shell grep 'VERSION' cmd/app/version.go | awk '{ print $$4 }' | tr -d '"')
 
-# HELP =================================================================================================================
-# This will output the help for each task
-# thanks to https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
-.PHONY: help
-
-help: ## Display this help screen
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
-
-local-latest: ### build local latest
-	swag init -g internal/controller/http/v1/router.go
-	docker tag $(DOCKER_IMAGE_NAME):$(VERSION) $(DOCKER_IMAGE_NAME):latest
-	docker tag $(DOCKER_IMAGE_NAME):$(VERSION) $(DOCKER_IMAGE_NAME):$(TAG)
 
 harbor-latest:
+	go generate ./ent
 	swag init -g internal/controller/http/v1/router.go
 	docker buildx build --platform linux/amd64  -t $(DOCKER_IMAGE_NAME):$(VERSION) -f ./building/latest/Dockerfile .
 	docker tag $(DOCKER_IMAGE_NAME):$(VERSION) $(HARBOR_ADDRESS)/$(DOCKER_IMAGE_NAME):$(VERSION)
@@ -31,6 +20,7 @@ harbor-latest:
 	docker push $(HARBOR_ADDRESS)/$(DOCKER_IMAGE_NAME):latest
 
 harbor-latest-debug:
+	go generate ./ent
 	swag init -g internal/controller/http/v1/router.go
 	docker buildx build --platform linux/amd64 -t $(DOCKER_IMAGE_NAME):latest.debug -f ./building/debug/Dockerfile .
 	docker tag $(DOCKER_IMAGE_NAME):latest.debug $(HARBOR_ADDRESS)/$(DOCKER_IMAGE_NAME):latest.debug
@@ -48,20 +38,18 @@ compose-down: ### Down docker-compose
 	docker-compose down --remove-orphans
 .PHONY: compose-down
 
-swag-v1: ### swag init
-	swag init -g internal/controller/http/v1/router.go
-.PHONY: swag-v1
 
-run: swag-v1 ### swag run
+run: run ### swag run
+	go generate ./ent
 	swag init -g internal/controller/http/v1/router.go
 	go mod tidy && go mod download && \
 	go build git.legchelife.ru/root/template/cmd/app
 	DISABLE_SWAGGER_HTTP_HANDLER='' GIN_MODE=debug CGO_ENABLED=0 go run -tags migrate ./cmd/app
 .PHONY: run
 
-docker-rm-volume: ### remove docker volume
-	docker volume rm go-clean-template_pg-data
-.PHONY: docker-rm-volume
+ent-gen: ### run ent generate
+	go generate ./ent
+.PHONY: ent-gen
 
 linter-golangci: ### check by golangci linter
 	golangci-lint run

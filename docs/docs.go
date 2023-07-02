@@ -60,12 +60,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
+	Version:          "0.0.0",
 	Host:             "localhost:1000",
 	BasePath:         "/v1",
 	Schemes:          []string{},
-	Title:            "CATALOG API123123",
-	Description:      "API для работы с каталогом и контентом сайта каталога",
+	Title:            "TEMPLATE",
+	Description:      "Шаблон для создания нового сервиса",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

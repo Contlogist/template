@@ -1,12 +1,12 @@
 package service_module_component
 
 import (
+	"git.legchelife.ru/root/template/ent"
 	"git.legchelife.ru/root/template/pkg/models/context"
 	"git.legchelife.ru/root/template/pkg/models/rechan"
-	"github.com/sirupsen/logrus"
 )
 
-func (s *Component) GetTest(ctx context.Base) (bool, error) {
+func (s *Component) GetTest(ctx context.Base) (*ent.User, error) {
 	ctx.SetTimeout(2)
 	reChan := make(chan rechan.Base, 0)
 	defer close(reChan)
@@ -24,19 +24,17 @@ func (s *Component) GetTest(ctx context.Base) (bool, error) {
 			c.SendError(reChan, "AutoUpdateAuthToken", err)
 		}
 
-		logrus.Info(res.ID)
-
-		c.SendData(reChan, true)
+		c.SendData(reChan, res)
 	}()
 
 	select {
 	case <-ctx.Context.Done():
-		return false, ctx.Context.Err()
+		return nil, ctx.Context.Err()
 	case re := <-reChan:
 		if re.Error != nil {
-			return false, re.Error
+			return nil, re.Error
 		} else {
-			return re.Data.(bool), nil
+			return re.Data.(*ent.User), nil
 		}
 	}
 }

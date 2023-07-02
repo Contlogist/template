@@ -23,5 +23,5 @@ func init() {
 	// userDescAge is the schema descriptor for age field.
 	userDescAge := userFields[1].Descriptor()
 	// user.AgeValidator is a validator for the "age" field. It is called by the builders before save.
-	user.AgeValidator = userDescAge.Validators[0].(func(int) error)
+	user.AgeValidator = userDescAge.Validators[0].(func(int8) error)
 }

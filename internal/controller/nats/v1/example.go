@@ -2,6 +2,7 @@ package natsrouter
 
 import (
 	"errors"
+	uc "git.legchelife.ru/root/template/internal/usecase"
 	"git.legchelife.ru/root/template/pkg/models/rechan"
 )
 

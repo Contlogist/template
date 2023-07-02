@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"git.legchelife.ru/root/template/ent/task"
+	"git.legchelife.ru/root/template/ent/user"
 )
 
 // TaskCreate is the builder for creating a Task entity.
@@ -35,6 +36,25 @@ func (tc *TaskCreate) SetAge(i int) *TaskCreate {
 func (tc *TaskCreate) SetAddress(s string) *TaskCreate {
 	tc.mutation.SetAddress(s)
 	return tc
+}
+
+// SetOwnerID sets the "owner" edge to the User entity by ID.
+func (tc *TaskCreate) SetOwnerID(id int) *TaskCreate {
+	tc.mutation.SetOwnerID(id)
+	return tc
+}
+
+// SetNillableOwnerID sets the "owner" edge to the User entity by ID if the given value is not nil.
+func (tc *TaskCreate) SetNillableOwnerID(id *int) *TaskCreate {
+	if id != nil {
+		tc = tc.SetOwnerID(*id)
+	}
+	return tc
+}
+
+// SetOwner sets the "owner" edge to the User entity.
+func (tc *TaskCreate) SetOwner(u *User) *TaskCreate {
+	return tc.SetOwnerID(u.ID)
 }
 
 // Mutation returns the TaskMutation object of the builder.
@@ -122,6 +142,23 @@ func (tc *TaskCreate) createSpec() (*Task, *sqlgraph.CreateSpec) {
 	if value, ok := tc.mutation.Address(); ok {
 		_spec.SetField(task.FieldAddress, field.TypeString, value)
 		_node.Address = value
+	}
+	if nodes := tc.mutation.OwnerIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   task.OwnerTable,
+			Columns: []string{task.OwnerColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.user_tasks = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

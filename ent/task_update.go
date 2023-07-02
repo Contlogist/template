@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"git.legchelife.ru/root/template/ent/predicate"
 	"git.legchelife.ru/root/template/ent/task"
+	"git.legchelife.ru/root/template/ent/user"
 )
 
 // TaskUpdate is the builder for updating Task entities.
@@ -52,9 +53,34 @@ func (tu *TaskUpdate) SetAddress(s string) *TaskUpdate {
 	return tu
 }
 
+// SetOwnerID sets the "owner" edge to the User entity by ID.
+func (tu *TaskUpdate) SetOwnerID(id int) *TaskUpdate {
+	tu.mutation.SetOwnerID(id)
+	return tu
+}
+
+// SetNillableOwnerID sets the "owner" edge to the User entity by ID if the given value is not nil.
+func (tu *TaskUpdate) SetNillableOwnerID(id *int) *TaskUpdate {
+	if id != nil {
+		tu = tu.SetOwnerID(*id)
+	}
+	return tu
+}
+
+// SetOwner sets the "owner" edge to the User entity.
+func (tu *TaskUpdate) SetOwner(u *User) *TaskUpdate {
+	return tu.SetOwnerID(u.ID)
+}
+
 // Mutation returns the TaskMutation object of the builder.
 func (tu *TaskUpdate) Mutation() *TaskMutation {
 	return tu.mutation
+}
+
+// ClearOwner clears the "owner" edge to the User entity.
+func (tu *TaskUpdate) ClearOwner() *TaskUpdate {
+	tu.mutation.ClearOwner()
+	return tu
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -118,6 +144,35 @@ func (tu *TaskUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := tu.mutation.Address(); ok {
 		_spec.SetField(task.FieldAddress, field.TypeString, value)
 	}
+	if tu.mutation.OwnerCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   task.OwnerTable,
+			Columns: []string{task.OwnerColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := tu.mutation.OwnerIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   task.OwnerTable,
+			Columns: []string{task.OwnerColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, tu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{task.Label}
@@ -163,9 +218,34 @@ func (tuo *TaskUpdateOne) SetAddress(s string) *TaskUpdateOne {
 	return tuo
 }
 
+// SetOwnerID sets the "owner" edge to the User entity by ID.
+func (tuo *TaskUpdateOne) SetOwnerID(id int) *TaskUpdateOne {
+	tuo.mutation.SetOwnerID(id)
+	return tuo
+}
+
+// SetNillableOwnerID sets the "owner" edge to the User entity by ID if the given value is not nil.
+func (tuo *TaskUpdateOne) SetNillableOwnerID(id *int) *TaskUpdateOne {
+	if id != nil {
+		tuo = tuo.SetOwnerID(*id)
+	}
+	return tuo
+}
+
+// SetOwner sets the "owner" edge to the User entity.
+func (tuo *TaskUpdateOne) SetOwner(u *User) *TaskUpdateOne {
+	return tuo.SetOwnerID(u.ID)
+}
+
 // Mutation returns the TaskMutation object of the builder.
 func (tuo *TaskUpdateOne) Mutation() *TaskMutation {
 	return tuo.mutation
+}
+
+// ClearOwner clears the "owner" edge to the User entity.
+func (tuo *TaskUpdateOne) ClearOwner() *TaskUpdateOne {
+	tuo.mutation.ClearOwner()
+	return tuo
 }
 
 // Where appends a list predicates to the TaskUpdate builder.
@@ -258,6 +338,35 @@ func (tuo *TaskUpdateOne) sqlSave(ctx context.Context) (_node *Task, err error) 
 	}
 	if value, ok := tuo.mutation.Address(); ok {
 		_spec.SetField(task.FieldAddress, field.TypeString, value)
+	}
+	if tuo.mutation.OwnerCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   task.OwnerTable,
+			Columns: []string{task.OwnerColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := tuo.mutation.OwnerIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   task.OwnerTable,
+			Columns: []string{task.OwnerColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &Task{config: tuo.config}
 	_spec.Assign = _node.assignValues

@@ -1,10 +1,10 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "API для работы с каталогом и контентом сайта каталога",
-        "title": "CATALOG API123123",
+        "description": "Шаблон для создания нового сервиса",
+        "title": "TEMPLATE",
         "contact": {},
-        "version": "1.0"
+        "version": "0.0.0"
     },
     "host": "localhost:1000",
     "basePath": "/v1",

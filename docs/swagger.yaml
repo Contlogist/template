@@ -2,9 +2,9 @@ basePath: /v1
 host: localhost:1000
 info:
   contact: {}
-  description: API для работы с каталогом и контентом сайта каталога
-  title: CATALOG API123123
-  version: "1.0"
+  description: Шаблон для создания нового сервиса
+  title: TEMPLATE
+  version: 0.0.0
 paths:
   /module/block/get/test:
     get:

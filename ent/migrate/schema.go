@@ -14,18 +14,27 @@ var (
 		{Name: "name", Type: field.TypeString},
 		{Name: "age", Type: field.TypeInt},
 		{Name: "address", Type: field.TypeString},
+		{Name: "user_tasks", Type: field.TypeInt, Nullable: true},
 	}
 	// TasksTable holds the schema information for the "tasks" table.
 	TasksTable = &schema.Table{
 		Name:       "tasks",
 		Columns:    TasksColumns,
 		PrimaryKey: []*schema.Column{TasksColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "tasks_users_tasks",
+				Columns:    []*schema.Column{TasksColumns[4]},
+				RefColumns: []*schema.Column{UsersColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 	}
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "name", Type: field.TypeString},
-		{Name: "age", Type: field.TypeInt},
+		{Name: "age", Type: field.TypeInt8},
 		{Name: "address", Type: field.TypeString},
 	}
 	// UsersTable holds the schema information for the "users" table.
@@ -42,4 +51,5 @@ var (
 )
 
 func init() {
+	TasksTable.ForeignKeys[0].RefTable = UsersTable
 }

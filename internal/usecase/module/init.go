@@ -2,6 +2,7 @@ package uc_module
 
 import (
 	"git.legchelife.ru/root/template/internal/repo/service"
+	uc_module_component "git.legchelife.ru/root/template/internal/usecase/module/component"
 )
 
 type Repo struct {

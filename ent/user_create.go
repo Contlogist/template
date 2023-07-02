@@ -9,6 +9,7 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"git.legchelife.ru/root/template/ent/task"
 	"git.legchelife.ru/root/template/ent/user"
 )
 
@@ -26,7 +27,7 @@ func (uc *UserCreate) SetName(s string) *UserCreate {
 }
 
 // SetAge sets the "age" field.
-func (uc *UserCreate) SetAge(i int) *UserCreate {
+func (uc *UserCreate) SetAge(i int8) *UserCreate {
 	uc.mutation.SetAge(i)
 	return uc
 }
@@ -35,6 +36,21 @@ func (uc *UserCreate) SetAge(i int) *UserCreate {
 func (uc *UserCreate) SetAddress(s string) *UserCreate {
 	uc.mutation.SetAddress(s)
 	return uc
+}
+
+// AddTaskIDs adds the "tasks" edge to the Task entity by IDs.
+func (uc *UserCreate) AddTaskIDs(ids ...int) *UserCreate {
+	uc.mutation.AddTaskIDs(ids...)
+	return uc
+}
+
+// AddTasks adds the "tasks" edges to the Task entity.
+func (uc *UserCreate) AddTasks(t ...*Task) *UserCreate {
+	ids := make([]int, len(t))
+	for i := range t {
+		ids[i] = t[i].ID
+	}
+	return uc.AddTaskIDs(ids...)
 }
 
 // Mutation returns the UserMutation object of the builder.
@@ -116,12 +132,28 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_node.Name = value
 	}
 	if value, ok := uc.mutation.Age(); ok {
-		_spec.SetField(user.FieldAge, field.TypeInt, value)
+		_spec.SetField(user.FieldAge, field.TypeInt8, value)
 		_node.Age = value
 	}
 	if value, ok := uc.mutation.Address(); ok {
 		_spec.SetField(user.FieldAddress, field.TypeString, value)
 		_node.Address = value
+	}
+	if nodes := uc.mutation.TasksIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.TasksTable,
+			Columns: []string{user.TasksColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(task.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

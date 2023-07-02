@@ -1,6 +1,8 @@
 package v1
 
 import (
+	rt_module_component "git.legchelife.ru/root/template/internal/controller/http/v1/module/component"
+	uc "git.legchelife.ru/root/template/internal/usecase"
 	"git.legchelife.ru/root/template/pkg/logger"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

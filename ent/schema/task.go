@@ -2,10 +2,10 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 )
 
-// User holds the schema definition for the User entity.
 type Task struct {
 	ent.Schema
 }
@@ -24,5 +24,10 @@ func (Task) Fields() []ent.Field {
 
 // Edges of the User.
 func (Task) Edges() []ent.Edge {
-	return nil
+	return []ent.Edge{
+		// Task много к одному с User
+		edge.From("owner", User.Type).
+			Ref("tasks").
+			Unique(),
+	}
 }

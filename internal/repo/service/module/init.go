@@ -2,6 +2,7 @@ package service_module
 
 import (
 	"git.legchelife.ru/root/template/ent"
+	"git.legchelife.ru/root/template/internal/repo/service/module/component"
 	"git.legchelife.ru/root/template/pkg/models/context"
 )
 
