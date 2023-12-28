@@ -12,8 +12,8 @@ type (
 		App  `yaml:"app"`
 		HTTP `yaml:"http"`
 		Log  `yaml:"logger"`
-		//Nats      `yaml:"nats"`
-		EntPG `yaml:"ent_pg"`
+		Nats `yaml:"nats"`
+		PG   `yaml:"pg"`
 	}
 
 	// App -.
@@ -33,18 +33,14 @@ type (
 		Level string `env-required:"true" yaml:"log_level" env:"LOG_LEVEL"`
 	}
 
-	//Nats modules {
-	//	URL   string `env-required:"true" yaml:"NATS_URL" env:"NATS_URL"`
-	//	Theme string `env-required:"true" yaml:"NATS_THEME" env:"NATS_THEME"`
-	//	Timer string `env-required:"true" yaml:"NATS_TIMER" env:"NATS_TIMER"`
-	//}
+	Nats struct {
+		URL   string `env-required:"true" yaml:"NATS_URL" env:"NATS_URL"`
+		Theme string `env-required:"true" yaml:"NATS_THEME" env:"NATS_THEME"`
+		Timer string `env-required:"true" yaml:"NATS_TIMER" env:"NATS_TIMER"`
+	}
 
-	EntPG struct {
-		Host     string `env-required:"true" yaml:"ENT_PG_HOST" env:"ENT_PG_HOST"`
-		Port     string `env-required:"true" yaml:"ENT_PG_PORT" env:"ENT_PG_PORT"`
-		User     string `env-required:"true" yaml:"ENT_PG_USER" env:"ENT_PG_USER"`
-		Password string `env-required:"true" yaml:"ENT_PG_PASSWORD" env:"ENT_PG_PASSWORD"`
-		Database string `env-required:"true" yaml:"ENT_PG_DATABASE" env:"ENT_PG_DATABASE"`
+	PG struct {
+		URL string `env-required:"true" yaml:"PG_URL" env:"PG_URL"`
 	}
 
 	//SqlDB struct {

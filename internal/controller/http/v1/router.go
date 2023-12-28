@@ -1,8 +1,8 @@
 package v1
 
 import (
-	rt_module_component "git.legchelife.ru/root/template/internal/controller/http/v1/module/component"
-	uc "git.legchelife.ru/root/template/internal/usecase"
+	"git.legchelife.ru/root/template/internal/controller/http/v1/module/user"
+	"git.legchelife.ru/root/template/internal/usecase"
 	"git.legchelife.ru/root/template/pkg/logger"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -22,7 +22,7 @@ type EmptyBody struct{}
 // Swagger spec:
 // @title       TEMPLATE
 // @description Шаблон для создания нового сервиса
-// @version     0.0.0
+// @version     $(VERSION)
 
 // @host        localhost:1000
 // @BasePath    /v1
@@ -61,7 +61,7 @@ func NewRouter(
 	h := handler.Group("/v1")
 	{
 
-		//module
-		rt_module_component.NewRoutes(h, usecase, l)
+		//User
+		rt_user.Routes(h, usecase, l)
 	}
 }

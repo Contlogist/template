@@ -1,31 +1,197 @@
 basePath: /v1
+definitions:
+  db_user.User:
+    properties:
+      name:
+        type: string
+      params:
+        $ref: '#/definitions/db_user.UserParams'
+    type: object
+  db_user.UserFilter:
+    properties:
+      company_id:
+        type: integer
+      name:
+        type: string
+    type: object
+  db_user.UserParams:
+    properties:
+      name:
+        type: string
+    type: object
 host: localhost:1000
 info:
   contact: {}
   description: Шаблон для создания нового сервиса
   title: TEMPLATE
-  version: 0.0.0
+  version: $(VERSION)
 paths:
-  /module/block/get/test:
-    get:
-      description: Метод для получения списка категорий
-      operationId: module.block.get
+  /user/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Метод удаления пользователя
+      parameters:
+      - description: ID пользователя
+        in: query
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: Возвращает список категорий
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
           schema:
             type: string
         "500":
-          description: Возвращает ошибку
+          description: Internal Server Error
           schema:
             type: string
-      security:
-      - Token-A: []
-      summary: getTest - получить категории
       tags:
-      - Catalog/Category
+      - User
+  /user/get:
+    get:
+      consumes:
+      - application/json
+      description: Метод получения пользователя по id
+      parameters:
+      - description: ID пользователя
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/db_user.User'
+            - properties:
+                id:
+                  type: integer
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - User
+  /user/get.list:
+    get:
+      consumes:
+      - application/json
+      description: Метод получения списка пользователей
+      parameters:
+      - description: Фильтр
+        in: body
+        name: filter
+        schema:
+          $ref: '#/definitions/db_user.UserFilter'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                allOf:
+                - $ref: '#/definitions/db_user.User'
+                - properties:
+                    id:
+                      type: integer
+                  type: object
+              type: array
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - User
+  /user/post:
+    post:
+      consumes:
+      - application/json
+      description: Метод создания пользователя
+      parameters:
+      - description: Пользователь
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/db_user.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/db_user.User'
+            - properties:
+                id:
+                  type: integer
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - User
+  /user/put:
+    put:
+      consumes:
+      - application/json
+      description: Метод обновления пользователя
+      parameters:
+      - description: Пользователь
+        in: body
+        name: user
+        required: true
+        schema:
+          allOf:
+          - $ref: '#/definitions/db_user.User'
+          - properties:
+              id:
+                type: integer
+            type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - User
 securityDefinitions:
   Token-A:
     in: header

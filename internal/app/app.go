@@ -3,9 +3,10 @@ package app
 
 import (
 	"fmt"
-	"git.legchelife.ru/root/template/internal/repo/service"
-	uc "git.legchelife.ru/root/template/internal/usecase"
-	"git.legchelife.ru/root/template/pkg/ent"
+	"git.legchelife.ru/root/template/internal/repo/db"
+	"git.legchelife.ru/root/template/internal/usecase"
+	"git.legchelife.ru/root/template/pkg/upper"
+	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"syscall"
@@ -28,24 +29,21 @@ const (
 func Run(cfg *config.Config) {
 	l := logger.New(cfg.Log.Level)
 
-	migration := true
-	switch cfg.App.Build {
-	case prod:
-		migration = false
-	case dev:
-		migration = true
+	// DB
+	dbClient, err := upper.NewPostgres(cfg.PG.URL)
+	if err != nil {
+		logrus.Error(err)
 	}
-	entClient, err := ent.NewPostgresClient(cfg.EntPG, migration)
 
 	// Repository
-	repo := service.New(entClient)
+	repo := repo_db.New(&dbClient)
 
 	// Use case
 	useCase := uc.New(repo)
 
 	//NATS Server
-	//conn, err := natsconnect.Connect(cfg.Nats.URL)
-	//natsconnect.New(conn, useCase)
+	//server, err := natsconnect.Connect(cfg.Nats.URL)
+	//natsconnect.New(server, *useCase)
 
 	// HTTP Server
 	gin.SetMode(gin.ReleaseMode)

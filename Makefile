@@ -1,17 +1,22 @@
-include .env.example
+include .env
 export
 
+YQ := yq
+LOCAL_BIN:=$(CURDIR)/bin
+PATH:=$(LOCAL_BIN):$(PATH)
+
 TAG?=latest
-NAME:=catalog_m
+NAME:=template
 DOCKER_REPOSITORY:=telepro
 HARBOR_ADDRESS:=harbor.legchelife.ru:8443
 DOCKER_IMAGE_NAME:=$(DOCKER_REPOSITORY)/$(NAME)
-VERSION:=$(shell grep 'VERSION' cmd/app/version.go | awk '{ print $$4 }' | tr -d '"')
+VERSION := $(shell $(YQ) eval '.app.version' config/config.yml)
 
 
 harbor-latest:
 	go generate ./ent
 	swag init -g internal/controller/http/v1/router.go
+	@sed -i '' 's/"version": "\(.*\)"/"version": "$(VERSION)"/' ./docs/swagger.json
 	docker buildx build --platform linux/amd64  -t $(DOCKER_IMAGE_NAME):$(VERSION) -f ./building/latest/Dockerfile .
 	docker tag $(DOCKER_IMAGE_NAME):$(VERSION) $(HARBOR_ADDRESS)/$(DOCKER_IMAGE_NAME):$(VERSION)
 	docker push $(HARBOR_ADDRESS)/$(DOCKER_IMAGE_NAME):$(VERSION)
@@ -27,6 +32,8 @@ harbor-latest-debug:
 	docker push $(HARBOR_ADDRESS)/$(DOCKER_IMAGE_NAME):latest.debug
 
 compose-up: ### Run docker-compose
+	swag init -g internal/controller/http/v1/router.go
+	go mod tidy && go mod download && \
 	docker-compose up --build
 .PHONY: compose-up
 
@@ -40,7 +47,7 @@ compose-down: ### Down docker-compose
 
 
 run: run ### swag run
-	go generate ./ent
+	#go generate ./ent
 	swag init -g internal/controller/http/v1/router.go
 	go mod tidy && go mod download && \
 	go build git.legchelife.ru/root/template/cmd/app
@@ -80,5 +87,9 @@ migrate-create:  ### create new migration
 .PHONY: migrate-create
 
 migrate-up: ### migration up
-	migrate -path migrations -database '$(PG_URL)?sslmode=disable' up
+	migrate -path migrations/$(VERSION) -database '$(PG_URL)?sslmode=disable' up
 .PHONY: migrate-up
+
+migrate-down: ### migration down
+	migrate -path migrations/$(VERSION) -database '$(PG_URL)?sslmode=disable' down
+.PHONY: migrate-down

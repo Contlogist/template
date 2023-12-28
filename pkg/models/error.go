@@ -1,8 +1,8 @@
 package models
 
 type ErrorMultiple struct {
-	SoftErrors    []string `json:"soft_errors" module:"error 1, error 2"` // Не критичные ошибки
-	CriticalError []string `json:"critical_error" module:"error 1"`       // Критичные ошибки
+	SoftErrors    []string `json:"soft_errors" 2:"error 1, error 2"` // Не критичные ошибки
+	CriticalError []string `json:"critical_error" 2:"error 1"`       // Критичные ошибки
 }
 
 func (e *ErrorMultiple) AddSoft(err error) {

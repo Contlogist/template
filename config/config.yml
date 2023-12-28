@@ -1,6 +1,6 @@
 app:
   name: 'Template'
-  version: '0.0.0'
+  version: '0.0.1'
   build: 'dev'
 
 http:
@@ -10,17 +10,12 @@ logger:
   log_level: 'debug'
   rollbar_env: 'catalog_m'
 
-#nats:
-#  NATS_URL: 'nats://nats:4222'
-#  NATS_THEME: 'module'
-#  NATS_TIMER: '2'
+nats:
+  NATS_URL: 'nats://nats:4222'
+  NATS_THEME: '2'
+  NATS_TIMER: '2'
 
-ent_pg:
-#  PG_URL: 'postgres://user:pass@postgres:5432/postgres'
-  ENT_PG_HOST: 'localhost'
-  ENT_PG_PORT: '5432'
-  ENT_PG_USER: 'user'
-  ENT_PG_PASSWORD: 'pass'
-  ENT_PG_DATABASE: 'postgres'
+pg:
+  PG_URL: 'postgres://2:pass@postgres:5432/postgres'
 
 
