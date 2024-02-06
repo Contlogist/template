@@ -1,7 +1,6 @@
 package upper
 
 import (
-	"github.com/sirupsen/logrus"
 	"github.com/upper/db/v4"
 	"github.com/upper/db/v4/adapter/mysql"
 	"github.com/upper/db/v4/adapter/postgresql"
@@ -24,7 +23,6 @@ func NewSQL(dbURL string) (db.Session, error) {
 
 // NewPostgres -.
 func NewPostgres(dbURL string) (db.Session, error) {
-	logrus.Info(dbURL)
 	settings, _ := postgresql.ParseURL(dbURL)
 	sess, err := postgresql.Open(settings)
 	sess.SetConnMaxLifetime(time.Minute * 4)

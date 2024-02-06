@@ -1,9 +1,30 @@
 version: '3.9'
 services:
-
+  app:
+    build: .
+    container_name: app
+#    restart: always
+    image: app
+    volumes:
+      - "/Users/romanabramov/Desktop/logs:/logs"
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      - APP_VERSION=${APP_VERSION}
+      - TZ=Europe/Moscow
+      - PG_URL=postgres://2:pass@postgres:5432/postgres
+      - LOG_LEVEL=dev
+      - SECRET=secret
+    ports:
+      - "1000:1000"
+    depends_on:
+      - postgres
+      - nats
+#      - grafana
+#      - prometheus
 
   postgres:
     container_name: postgres
+#    restart: always
     image: postgres
     environment:
       POSTGRES_USER: '2'
@@ -11,26 +32,38 @@ services:
       POSTGRES_DB: 'postgres'
     ports:
       - "5432:5432"
-
-  #  nats:
-  #    image: nats:latest
-  #    ports:
-  #      - "4222:4222"
-  #      - "8222:8222"
-  #      - "6222:6222"
-  #    command: [ "--jetstream" ]
-
-  app:
-    build: .
-    container_name: app
-    image: app
     volumes:
-      - /mnt/portal_files
-    environment:
-      PG_URL: 'postgres://2:pass@postgres:5432/postgres'
-      APP_VERSION: ${APP_VERSION}
+      - /Users/romanabramov/Documents/Developer/ContLogist/containers/postgres/data:/var/lib/postgresql/data
+
+  nats:
+    image: nats:latest
+#    restart: always
     ports:
-      - "1000:1000"
-    depends_on:
-      - postgres
-#      - nats
+      - "4222:4222"
+      - "8222:8222"
+      - "6222:6222"
+    environment:
+      - NATS_CONFIG=/etc/nats/nats-server.conf
+    volumes:
+      - /Users/romanabramov/Documents/Developer/ContLogist/containers/nats/nats-server.conf:/etc/nats/nats-server.conf
+      - /Users/romanabramov/Documents/Developer/ContLogist/containers/nats/data:/tmp/nats/jetstream
+    command: [ "-js", "-m", "8222" ]
+    stdin_open: true
+    tty: true
+
+#  grafana:
+#    image: grafana/grafana-enterprise
+#    container_name: grafana
+#    restart: always
+#    ports:
+#      - "3000:3000"
+
+#  prometheus:
+#    image: prom/prometheus
+#    restart: always
+#    volumes:
+#      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#    ports:
+#      - "9090:9090"
+
+

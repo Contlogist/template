@@ -1,102 +1,120 @@
 package logger
 
 import (
-	"fmt"
+	"github.com/rifflock/lfshook"
+	"github.com/sirupsen/logrus"
+	"gopkg.in/natefinch/lumberjack.v2"
 	"os"
-	"strings"
-
-	"github.com/rs/zerolog"
+	"time"
 )
+
+type ActionENUM string
+type LogTypeENUM string
+
+const (
+	Parse    ActionENUM = "parse"
+	Validate ActionENUM = "validation"
+	Usecase  ActionENUM = "usecase"
+
+	Dev  LogTypeENUM = "dev"
+	Prod LogTypeENUM = "prod"
+)
+
+type Data struct {
+	Module string                 `json:"module"`
+	Method string                 `json:"method"`
+	Action ActionENUM             `json:"action"`
+	Params map[string]interface{} `json:"params"`
+}
 
 // Interface -.
 type Interface interface {
-	Debug(message interface{}, args ...interface{})
-	Info(message string, args ...interface{})
-	Warn(message string, args ...interface{})
-	Error(message interface{}, args ...interface{})
-	Fatal(message interface{}, args ...interface{})
+	Info(message string, args Data)
+	Warn(message string, args Data)
+	Error(message interface{}, args Data)
 }
 
 // Logger -.
 type Logger struct {
-	logger *zerolog.Logger
+	logger  *logrus.Logger
+	typeLog LogTypeENUM
 }
 
 var _ Interface = (*Logger)(nil)
 
 // New -.
-func New(level string) *Logger {
-	var l zerolog.Level
+func New() *Logger {
+	var l logrus.Level
+	logger := logrus.New()
 
-	switch strings.ToLower(level) {
-	case "error":
-		l = zerolog.ErrorLevel
-	case "warn":
-		l = zerolog.WarnLevel
-	case "info":
-		l = zerolog.InfoLevel
-	case "debug":
-		l = zerolog.DebugLevel
-	default:
-		l = zerolog.InfoLevel
+	level, ok := os.LookupEnv("LOG_LEVEL")
+	if !ok || len(level) == 0 {
+		level = "dev"
 	}
 
-	zerolog.SetGlobalLevel(l)
+	switch level {
+	case "prod":
+		l = logrus.InfoLevel
+	case "dev":
+		l = logrus.DebugLevel
+	default:
+		l = logrus.DebugLevel
+	}
 
-	skipFrameCount := 3
-	logger := zerolog.New(os.Stdout).With().Timestamp().CallerWithSkipFrameCount(zerolog.CallerSkipFrameCount + skipFrameCount).Logger()
+	if l == logrus.InfoLevel {
+		logFilePath := "logs/app.log"
+
+		logFile := &lumberjack.Logger{
+			Filename:   logFilePath,
+			MaxSize:    10, // Максимальный размер файла в мегабайтах перед ротацией
+			MaxBackups: 5,  // Максимальное количество резервных файлов
+			MaxAge:     28, // Максимальный возраст файла в днях
+			Compress:   true,
+		}
+
+		logger.SetLevel(l)
+
+		logger.AddHook(lfshook.NewHook(
+			lfshook.WriterMap{
+				logrus.InfoLevel:  logFile,
+				logrus.WarnLevel:  logFile,
+				logrus.ErrorLevel: logFile,
+			},
+			&logrus.JSONFormatter{},
+		))
+
+		defer func(logFile *lumberjack.Logger) {
+			err := logFile.Close()
+			if err != nil {
+				logrus.Error(err)
+			}
+		}(logFile)
+
+	} else {
+		logger.SetLevel(l)
+	}
 
 	return &Logger{
-		logger: &logger,
+		logger: logger,
 	}
-}
-
-// Debug -.
-func (l *Logger) Debug(message interface{}, args ...interface{}) {
-	l.msg("debug", message, args...)
 }
 
 // Info -.
-func (l *Logger) Info(message string, args ...interface{}) {
-	l.log(message, args...)
+func (l *Logger) Info(message string, args Data) {
+	if l.logger.Level == logrus.DebugLevel {
+		timeStamp := time.Now().Format("2006-01-02 15:04:05")
+		l.logger.Info("INFO: ", timeStamp, " - ", message, args)
+	}
 }
 
 // Warn -.
-func (l *Logger) Warn(message string, args ...interface{}) {
-	l.log(message, args...)
+func (l *Logger) Warn(message string, args Data) {
+	timeStamp := time.Now().Format("2006-01-02 15:04:05")
+	l.logger.Warn("WARN: ", timeStamp, " - ", message, args)
 }
 
 // Error -.
-func (l *Logger) Error(message interface{}, args ...interface{}) {
-	if l.logger.GetLevel() == zerolog.DebugLevel {
-		l.Debug(message, args...)
-	}
-
-	l.msg("error", message, args...)
-}
-
-// Fatal -.
-func (l *Logger) Fatal(message interface{}, args ...interface{}) {
-	l.msg("fatal", message, args...)
-
-	os.Exit(1)
-}
-
-func (l *Logger) log(message string, args ...interface{}) {
-	if len(args) == 0 {
-		l.logger.Info().Msg(message)
-	} else {
-		l.logger.Info().Msgf(message, args...)
-	}
-}
-
-func (l *Logger) msg(level string, message interface{}, args ...interface{}) {
-	switch msg := message.(type) {
-	case error:
-		l.log(msg.Error(), args...)
-	case string:
-		l.log(msg, args...)
-	default:
-		l.log(fmt.Sprintf("%s message %v has unknown type %v", level, message, msg), args...)
-	}
+func (l *Logger) Error(message interface{}, args Data) {
+	timeStamp := time.Now().Format("2006-01-02 15:04:05")
+	l.logger.Error("ERROR: ", timeStamp, " - ", message, args)
 }

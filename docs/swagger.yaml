@@ -1,22 +1,70 @@
 basePath: /v1
 definitions:
-  db_user.User:
+  response.Base:
     properties:
+      data: {}
+      error: {}
+    type: object
+  rp_section.Section:
+    properties:
+      icon:
+        type: string
       name:
         type: string
-      params:
-        $ref: '#/definitions/db_user.UserParams'
+      url:
+        type: string
+    required:
+    - name
+    - url
     type: object
-  db_user.UserFilter:
+  user.AccessToken:
+    properties:
+      hours:
+        type: integer
+      token:
+        type: string
+    type: object
+  user.RefreshToken:
+    properties:
+      hours:
+        type: integer
+      token:
+        type: string
+    type: object
+  user.Tokens:
+    properties:
+      access:
+        $ref: '#/definitions/user.AccessToken'
+      refresh:
+        $ref: '#/definitions/user.RefreshToken'
+    type: object
+  user.User:
     properties:
       company_id:
         type: integer
+      email:
+        type: string
       name:
         type: string
+      password:
+        type: string
+      refresh_token:
+        type: string
+    required:
+    - company_id
+    - email
+    - name
+    - password
     type: object
-  db_user.UserParams:
+  user.UserFilter:
     properties:
-      name:
+      email:
+        example: r.abramov@contlogist.ru
+        format: email
+        type: string
+      password:
+        example: "123456"
+        format: password
         type: string
     type: object
 host: localhost:1000
@@ -24,47 +72,13 @@ info:
   contact: {}
   description: Шаблон для создания нового сервиса
   title: TEMPLATE
-  version: $(VERSION)
 paths:
-  /user/delete:
-    delete:
-      consumes:
-      - application/json
-      description: Метод удаления пользователя
-      parameters:
-      - description: ID пользователя
-        in: query
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: boolean
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      tags:
-      - User
-  /user/get:
+  /section/get.list:
     get:
       consumes:
       - application/json
-      description: Метод получения пользователя по id
-      parameters:
-      - description: ID пользователя
-        in: query
-        name: id
-        required: true
-        type: integer
+      description: |
+        Метод получает список секций
       produces:
       - application/json
       responses:
@@ -72,32 +86,159 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/db_user.User'
+            - $ref: '#/definitions/response.Base'
             - properties:
-                id:
-                  type: integer
+                data:
+                  allOf:
+                  - $ref: '#/definitions/rp_section.Section'
+                  - properties:
+                      id:
+                        type: integer
+                    type: object
+                error:
+                  type: object
               type: object
         "400":
           description: Bad Request
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
         "500":
           description: Internal Server Error
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+      security:
+      - Authorization: []
+      summary: Получение списка секций
+      tags:
+      - Section
+  /user/delete:
+    delete:
+      consumes:
+      - application/json
+      description: |-
+        Метод удаления пользователя
+        ID пользователя берется из payload
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: boolean
+                error:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+      security:
+      - Authorization: []
+      summary: Обновление пользователя
       tags:
       - User
-  /user/get.list:
+  /user/get:
     get:
       consumes:
       - application/json
-      description: Метод получения списка пользователей
+      description: |-
+        Метод получения пользователя - (payload)
+        ID пользователя берется из payload
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/user.User'
+                  - properties:
+                      id:
+                        type: integer
+                    type: object
+                error:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+      security:
+      - Authorization: []
+      summary: Получение пользователя
+      tags:
+      - User
+  /user/get.list:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Метод получения списка пользователей - (filter + payload)
+        Фильтр основывается на payload(cid)
       parameters:
       - description: Фильтр
         in: body
         name: filter
         schema:
-          $ref: '#/definitions/db_user.UserFilter'
+          $ref: '#/definitions/user.UserFilter'
       produces:
       - application/json
       responses:
@@ -105,37 +246,55 @@ paths:
           description: OK
           schema:
             items:
-              items:
-                allOf:
-                - $ref: '#/definitions/db_user.User'
-                - properties:
-                    id:
-                      type: integer
-                  type: object
-              type: array
+              allOf:
+              - $ref: '#/definitions/response.Base'
+              - properties:
+                  data:
+                    items:
+                      $ref: '#/definitions/user.User'
+                    type: array
+                  error:
+                    type: object
+                type: object
             type: array
         "400":
           description: Bad Request
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
         "500":
           description: Internal Server Error
           schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+      security:
+      - Authorization: []
+      summary: Получение списка пользователей
       tags:
       - User
-  /user/post:
-    post:
+  /user/param/get.list:
+    get:
       consumes:
       - application/json
-      description: Метод создания пользователя
+      description: Метод получения параметров пользователя по id
       parameters:
-      - description: Пользователь
-        in: body
-        name: user
+      - description: ID пользователя
+        in: query
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/db_user.User'
+        type: string
       produces:
       - application/json
       responses:
@@ -143,7 +302,7 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/db_user.User'
+            - $ref: '#/definitions/user.User'
             - properties:
                 id:
                   type: integer
@@ -157,31 +316,194 @@ paths:
           schema:
             type: string
       tags:
-      - User
-  /user/put:
-    put:
+      - User/Param
+  /user/post:
+    post:
       consumes:
       - application/json
-      description: Метод обновления пользователя
+      description: |-
+        Метод создания пользователя, используется при регистрации компании (создается администратор)),
+        а так же когда администратор создает пользователя в своей компании
+        CID (ID компании) берется из payload (из токена администратора)
       parameters:
       - description: Пользователь
         in: body
         name: user
         required: true
         schema:
-          allOf:
-          - $ref: '#/definitions/db_user.User'
-          - properties:
-              id:
-                type: integer
-            type: object
+          $ref: '#/definitions/user.User'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            type: boolean
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: integer
+                error:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+      security:
+      - Authorization: []
+      summary: Создание пользователя
+      tags:
+      - User
+  /user/post100000:
+    post:
+      consumes:
+      - application/json
+      description: Метод создания 100000 пользователей, используется для тестирования
+      parameters:
+      - description: Пользователь
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: integer
+                error:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+      security:
+      - Authorization: []
+      summary: Создание 100000 пользователей
+      tags:
+      - User
+  /user/put:
+    put:
+      consumes:
+      - application/json
+      description: |-
+        Метод обновления пользователя
+        ID пользователя берется из payload
+      parameters:
+      - description: Пользователь
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: boolean
+                error:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Base'
+            - properties:
+                data:
+                  type: object
+                error:
+                  type: string
+              type: object
+      security:
+      - Authorization: []
+      summary: Обновление пользователя
+      tags:
+      - User
+  /user/token/get:
+    get:
+      consumes:
+      - application/json
+      description: Метод получает токен пользователя (аутентификация)
+      parameters:
+      - description: email
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: password
+        in: query
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.Tokens'
         "400":
           description: Bad Request
           schema:
@@ -191,10 +513,10 @@ paths:
           schema:
             type: string
       tags:
-      - User
+      - User/Token
 securityDefinitions:
-  Token-A:
+  Authorization:
     in: header
-    name: Token-A
+    name: Authorization
     type: apiKey
 swagger: "2.0"

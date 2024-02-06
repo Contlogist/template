@@ -1,0 +1,1413 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>company: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">git.legchelife.ru/root/template/internal/repo/company/company.go (0.0%)</option>
+				
+				<option value="file1">git.legchelife.ru/root/template/internal/repo/ini.go (50.0%)</option>
+				
+				<option value="file2">git.legchelife.ru/root/template/internal/repo/section/section.go (0.0%)</option>
+				
+				<option value="file3">git.legchelife.ru/root/template/internal/repo/user/mock/user_mock.go (100.0%)</option>
+				
+				<option value="file4">git.legchelife.ru/root/template/internal/repo/user/mock/user_param_mock.go (100.0%)</option>
+				
+				<option value="file5">git.legchelife.ru/root/template/internal/repo/user/mock/user_token_mock.go (0.0%)</option>
+				
+				<option value="file6">git.legchelife.ru/root/template/internal/repo/user/repo.go (50.0%)</option>
+				
+				<option value="file7">git.legchelife.ru/root/template/internal/repo/user/user.go (0.0%)</option>
+				
+				<option value="file8">git.legchelife.ru/root/template/internal/repo/user/user_filter.go (0.0%)</option>
+				
+				<option value="file9">git.legchelife.ru/root/template/internal/repo/user/user_param.go (0.0%)</option>
+				
+				<option value="file10">git.legchelife.ru/root/template/internal/repo/user/user_param_filter.go (0.0%)</option>
+				
+				<option value="file11">git.legchelife.ru/root/template/internal/repo/user/user_token.go (0.0%)</option>
+				
+				<option value="file12">git.legchelife.ru/root/template/internal/usecase/ini.go (100.0%)</option>
+				
+				<option value="file13">git.legchelife.ru/root/template/internal/usecase/module/section/section.go (20.0%)</option>
+				
+				<option value="file14">git.legchelife.ru/root/template/internal/usecase/module/user/param.go (100.0%)</option>
+				
+				<option value="file15">git.legchelife.ru/root/template/internal/usecase/module/user/repo.go (100.0%)</option>
+				
+				<option value="file16">git.legchelife.ru/root/template/internal/usecase/module/user/token.go (5.0%)</option>
+				
+				<option value="file17">git.legchelife.ru/root/template/internal/usecase/module/user/user.go (100.0%)</option>
+				
+				<option value="file18">git.legchelife.ru/root/template/pkg/models/context/context.go (0.0%)</option>
+				
+				<option value="file19">git.legchelife.ru/root/template/pkg/models/error.go (0.0%)</option>
+				
+				<option value="file20">git.legchelife.ru/root/template/pkg/models/rechan/rechan.go (0.0%)</option>
+				
+				<option value="file21">git.legchelife.ru/root/template/pkg/models/rechan/rechan_multiple.go (0.0%)</option>
+				
+				<option value="file22">git.legchelife.ru/root/template/pkg/security/jwt/jwt.go (0.0%)</option>
+				
+				<option value="file23">git.legchelife.ru/root/template/pkg/upper/request.go (0.0%)</option>
+				
+				<option value="file24">git.legchelife.ru/root/template/pkg/upper/sql.go (0.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package rp_company
+
+import (
+        "git.legchelife.ru/root/template/pkg/models/context"
+        "git.legchelife.ru/root/template/pkg/upper"
+        "github.com/upper/db/v4"
+)
+
+func New(db *db.Session) *Company <span class="cov0" title="0">{
+        return &amp;Company{db: *db}
+}</span>
+
+// Company model information.
+// @Description Company model information.
+type Company struct {
+        db          db.Session
+        ID          int    `db:"id,omitempty" json:"id" swaggerignore:"true"`
+        Name        string `db:"name" json:"name" validate:"required"`
+        Description string `db:"description" json:"description" validate:"required"`
+        CreatedAt   string `db:"created_at" json:"created_at" swaggerignore:"true"`
+}
+
+func (r *Company) Get(ctx *context.Base, id int) (*Company, error) <span class="cov0" title="0">{
+        ctx.SetTimeout(3)
+
+        request, err := upper.DoRequest[*Company](ctx, func() (*Company, error) </span><span class="cov0" title="0">{
+                company := Company{}
+                err := r.db.Collection("user").Find(db.Cond{"id": id}).One(&amp;company)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                <span class="cov0" title="0">return &amp;company, nil</span>
+        })
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return *request, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package repo
+
+import (
+        "git.legchelife.ru/root/template/internal/repo/company"
+        "git.legchelife.ru/root/template/internal/repo/section"
+        "git.legchelife.ru/root/template/internal/repo/user"
+        "github.com/upper/db/v4"
+)
+
+type Repo struct {
+        UserRepo    *user.Repo
+        CompanyRepo *rp_company.Company
+        SectionRepo *rp_section.Section
+}
+
+func New(db *db.Session) *Repo <span class="cov0" title="0">{
+        return &amp;Repo{
+                user.New(db),
+                rp_company.New(db),
+                rp_section.New(db),
+        }
+}</span>
+
+func NewFake(
+        UserRepo *user.Repo,
+        CompanyRepo *rp_company.Company,
+        SectionRepo *rp_section.Section,
+) *Repo <span class="cov8" title="1">{
+        return &amp;Repo{
+                UserRepo,
+                CompanyRepo,
+                SectionRepo,
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package rp_section
+
+import (
+        "git.legchelife.ru/root/template/pkg/models/context"
+        "git.legchelife.ru/root/template/pkg/upper"
+        "github.com/upper/db/v4"
+)
+
+func New(db *db.Session) *Section <span class="cov0" title="0">{
+        return &amp;Section{
+                db: *db,
+        }
+}</span>
+
+type Section struct {
+        db   db.Session
+        ID   int    `db:"id,omitempty" json:"id" swaggerignore:"true"`
+        Name string `db:"name" json:"name" validate:"required"`
+        URL  string `db:"url" json:"url" validate:"required"`
+        Icon string `db:"icon" json:"icon"`
+}
+
+func (r *Section) GetList(ctx *context.Base) ([]Section, error) <span class="cov0" title="0">{
+        ctx.SetTimeout(3)
+
+        request, err := upper.DoRequest[[]Section](ctx, func() ([]Section, error) </span><span class="cov0" title="0">{
+                section := make([]Section, 0)
+                err := r.db.Collection("section").Find().One(&amp;section)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                <span class="cov0" title="0">return section, nil</span>
+        })
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return *request, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+// Source: user.go
+
+// Package user_mock is a generated GoMock package.
+package user_mock
+
+import (
+        reflect "reflect"
+
+        user "git.legchelife.ru/root/template/internal/repo/user"
+        context "git.legchelife.ru/root/template/pkg/models/context"
+        gomock "github.com/golang/mock/gomock"
+)
+
+// MockIUser is a mock of IUser interface.
+type MockIUser struct {
+        ctrl     *gomock.Controller
+        recorder *MockIUserMockRecorder
+}
+
+// MockIUserMockRecorder is the mock recorder for MockIUser.
+type MockIUserMockRecorder struct {
+        mock *MockIUser
+}
+
+// NewMockIUser creates a new mock instance.
+func NewMockIUser(ctrl *gomock.Controller) *MockIUser <span class="cov8" title="1">{
+        mock := &amp;MockIUser{ctrl: ctrl}
+        mock.recorder = &amp;MockIUserMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockIUser) EXPECT() *MockIUserMockRecorder <span class="cov8" title="1">{
+        return m.recorder
+}</span>
+
+// Delete mocks base method.
+func (m *MockIUser) Delete(ctx *context.Base, id int) (bool, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "Delete", ctx, id)
+        ret0, _ := ret[0].(bool)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// Delete indicates an expected call of Delete.
+func (mr *MockIUserMockRecorder) Delete(ctx, id interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockIUser)(nil).Delete), ctx, id)
+}</span>
+
+// Get mocks base method.
+func (m *MockIUser) Get(ctx *context.Base, id int) (*user.User, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "Get", ctx, id)
+        ret0, _ := ret[0].(*user.User)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// Get indicates an expected call of Get.
+func (mr *MockIUserMockRecorder) Get(ctx, id interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockIUser)(nil).Get), ctx, id)
+}</span>
+
+// GetList mocks base method.
+func (m *MockIUser) GetList(ctx *context.Base, filter user.UserFilter) ([]user.User, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "GetList", ctx, filter)
+        ret0, _ := ret[0].([]user.User)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// GetList indicates an expected call of GetList.
+func (mr *MockIUserMockRecorder) GetList(ctx, filter interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetList", reflect.TypeOf((*MockIUser)(nil).GetList), ctx, filter)
+}</span>
+
+// Post mocks base method.
+func (m *MockIUser) Post(ctx *context.Base, u user.User) (*int, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "Post", ctx, u)
+        ret0, _ := ret[0].(*int)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// Post indicates an expected call of Post.
+func (mr *MockIUserMockRecorder) Post(ctx, u interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Post", reflect.TypeOf((*MockIUser)(nil).Post), ctx, u)
+}</span>
+
+// Put mocks base method.
+func (m *MockIUser) Put(ctx *context.Base, user *user.User) (bool, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "Put", ctx, user)
+        ret0, _ := ret[0].(bool)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// Put indicates an expected call of Put.
+func (mr *MockIUserMockRecorder) Put(ctx, user interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Put", reflect.TypeOf((*MockIUser)(nil).Put), ctx, user)
+}</span>
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+// Source: user_param.go
+
+// Package user_mock is a generated GoMock package.
+package user_mock
+
+import (
+        reflect "reflect"
+
+        user "git.legchelife.ru/root/template/internal/repo/user"
+        context "git.legchelife.ru/root/template/pkg/models/context"
+        gomock "github.com/golang/mock/gomock"
+)
+
+// MockIParam is a mock of IParam interface.
+type MockIParam struct {
+        ctrl     *gomock.Controller
+        recorder *MockIParamMockRecorder
+}
+
+// MockIParamMockRecorder is the mock recorder for MockIParam.
+type MockIParamMockRecorder struct {
+        mock *MockIParam
+}
+
+// NewMockIParam creates a new mock instance.
+func NewMockIParam(ctrl *gomock.Controller) *MockIParam <span class="cov8" title="1">{
+        mock := &amp;MockIParam{ctrl: ctrl}
+        mock.recorder = &amp;MockIParamMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockIParam) EXPECT() *MockIParamMockRecorder <span class="cov8" title="1">{
+        return m.recorder
+}</span>
+
+// GetList mocks base method.
+func (m *MockIParam) GetList(ctx *context.Base, id int) ([]user.Param, error) <span class="cov8" title="1">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "GetList", ctx, id)
+        ret0, _ := ret[0].([]user.Param)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// GetList indicates an expected call of GetList.
+func (mr *MockIParamMockRecorder) GetList(ctx, id interface{}) *gomock.Call <span class="cov8" title="1">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetList", reflect.TypeOf((*MockIParam)(nil).GetList), ctx, id)
+}</span>
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">// Code generated by MockGen. DO NOT EDIT.
+// Source: user_token.go
+
+// Package user_mock is a generated GoMock package.
+package user_mock
+
+import (
+        reflect "reflect"
+
+        user "git.legchelife.ru/root/template/internal/repo/user"
+        context "git.legchelife.ru/root/template/pkg/models/context"
+        gomock "github.com/golang/mock/gomock"
+)
+
+// MockIToken is a mock of IToken interface.
+type MockIToken struct {
+        ctrl     *gomock.Controller
+        recorder *MockITokenMockRecorder
+}
+
+// MockITokenMockRecorder is the mock recorder for MockIToken.
+type MockITokenMockRecorder struct {
+        mock *MockIToken
+}
+
+// NewMockIToken creates a new mock instance.
+func NewMockIToken(ctrl *gomock.Controller) *MockIToken <span class="cov0" title="0">{
+        mock := &amp;MockIToken{ctrl: ctrl}
+        mock.recorder = &amp;MockITokenMockRecorder{mock}
+        return mock
+}</span>
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockIToken) EXPECT() *MockITokenMockRecorder <span class="cov0" title="0">{
+        return m.recorder
+}</span>
+
+// Create mocks base method.
+func (m *MockIToken) Create(ctx *context.Base, userID, companyID int) (*user.Token, error) <span class="cov0" title="0">{
+        m.ctrl.T.Helper()
+        ret := m.ctrl.Call(m, "Create", ctx, userID, companyID)
+        ret0, _ := ret[0].(*user.Token)
+        ret1, _ := ret[1].(error)
+        return ret0, ret1
+}</span>
+
+// Create indicates an expected call of Create.
+func (mr *MockITokenMockRecorder) Create(ctx, userID, companyID interface{}) *gomock.Call <span class="cov0" title="0">{
+        mr.mock.ctrl.T.Helper()
+        return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockIToken)(nil).Create), ctx, userID, companyID)
+}</span>
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package user
+
+import (
+        "github.com/upper/db/v4"
+)
+
+type Repo struct {
+        User  IUser
+        Param IParam
+        Token IToken
+}
+
+func New(db *db.Session) *Repo <span class="cov0" title="0">{
+        return &amp;Repo{
+                &amp;User{db: *db},
+                &amp;Param{db: *db},
+                &amp;Token{},
+        }
+}</span>
+
+func NewFake(
+        UserRepo IUser,
+        ParamRepo IParam,
+        TokenRepo IToken,
+) *Repo <span class="cov8" title="1">{
+        return &amp;Repo{
+                UserRepo,
+                ParamRepo,
+                TokenRepo,
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package user
+
+import (
+        "git.legchelife.ru/root/template/pkg/models/context"
+        "git.legchelife.ru/root/template/pkg/upper"
+        "github.com/sirupsen/logrus"
+        "github.com/upper/db/v4"
+)
+
+//go:generate mockgen -source=user.go -destination=./mock/user_mock.go -package=user_mock
+type IUser interface {
+        Get(ctx *context.Base, id int) (*User, error)
+        GetList(ctx *context.Base, filter UserFilter) ([]User, error)
+        Post(ctx *context.Base, u User) (*int, error)
+        Put(ctx *context.Base, user *User) (bool, error)
+        Delete(ctx *context.Base, id int) (bool, error)
+}
+
+type User struct {
+        db           db.Session
+        ID           int     `db:"id,omitempty" json:"id" swaggerignore:"true"`
+        Name         string  `db:"name" json:"name" validate:"required"`
+        Email        string  `db:"email" json:"email" validate:"required,email"`
+        Password     string  `db:"password" json:"password" validate:"required"`
+        CompanyID    int     `db:"company_id" json:"company_id" validate:"required"`
+        RefreshToken *string `db:"refresh_token" json:"refresh_token"`
+        //
+        //Params *Params `db:"-" json:"-" swagger:"-"`
+        //Tokens *Tokens `db:"-" json:"-" swagger:"-"`
+}
+
+// GetList получает список моделей User из базы данных, доступен фильтр UserFilter для поиска.
+func (r *User) GetList(ctx *context.Base, filter UserFilter) ([]User, error) <span class="cov0" title="0">{
+        ctx.SetTimeout(1)
+        request, err := upper.DoRequest[[]User](ctx, func() ([]User, error) </span><span class="cov0" title="0">{
+                logrus.Info("ctx: ", ctx.Context.Value("timeout"))
+                users := make([]User, 0)
+                sess := r.db.Collection("user")
+                result := sess.Find(filter.Conditions())
+                err := result.All(&amp;users)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+
+                <span class="cov0" title="0">return users, nil</span>
+        })
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return *request, nil</span>
+}
+
+// Get получает модель User из базы данных по ID.
+func (r *User) Get(ctx *context.Base, id int) (*User, error) <span class="cov0" title="0">{
+        ctx.SetTimeout(3)
+        request, err := upper.DoRequest[*User](ctx, func() (*User, error) </span><span class="cov0" title="0">{
+                user := User{}
+                err := r.db.Collection("user").Find(db.Cond{"id": id}).One(&amp;user)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                <span class="cov0" title="0">return &amp;user, nil</span>
+        })
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return *request, nil</span>
+}
+
+// Post создает новую модель User в базе данных и возвращает
+func (r *User) Post(ctx *context.Base, user User) (*int, error) <span class="cov0" title="0">{
+        ctx.SetTimeout(3)
+        request, err := upper.DoRequest[*User](ctx, func() (*User, error) </span><span class="cov0" title="0">{
+                err := r.db.Collection("user").InsertReturning(&amp;user)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                <span class="cov0" title="0">return &amp;user, nil</span>
+        })
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return &amp;(*request).ID, nil</span>
+}
+
+// Put обновляет модель User в базе данных.
+func (r *User) Put(ctx *context.Base, user *User) (bool, error) <span class="cov0" title="0">{
+        ctx.SetTimeout(3)
+        request, err := upper.DoRequest[bool](ctx, func() (bool, error) </span><span class="cov0" title="0">{
+                err := r.db.Collection("user").Find(db.Cond{"id": user.ID}).Update(user)
+                if err != nil </span><span class="cov0" title="0">{
+                        return false, err
+                }</span>
+                <span class="cov0" title="0">return true, nil</span>
+        })
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return false, err
+        }</span>
+        <span class="cov0" title="0">return *request, nil</span>
+}
+
+// Delete удаляет модель User из базы данных.
+func (r *User) Delete(ctx *context.Base, id int) (bool, error) <span class="cov0" title="0">{
+        ctx.SetTimeout(3)
+        request, err := upper.DoRequest[bool](ctx, func() (bool, error) </span><span class="cov0" title="0">{
+                err := r.db.Collection("user").Find(db.Cond{"id": id}).Delete()
+                if err != nil </span><span class="cov0" title="0">{
+                        return false, err
+                }</span>
+                <span class="cov0" title="0">return true, nil</span>
+        })
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return false, err
+        }</span>
+        <span class="cov0" title="0">return *request, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package user
+
+import (
+        "github.com/upper/db/v4"
+)
+
+type UserFilter struct {
+        CompanyID int    `json:"company_id" db:"company_id" swaggerignore:"true"`
+        Email     string `json:"email" db:"email" example:"r.abramov@contlogist.ru" format:"email" required:"false"`
+        Password  string `json:"password" db:"password" example:"123456" format:"password" required:"false"`
+}
+
+// Conditions возвращает условия для фильтрации для upper запроса в базу данных.
+func (r *UserFilter) Conditions() db.Cond <span class="cov0" title="0">{
+        conditions := db.Cond{}
+
+        if r.CompanyID != 0 </span><span class="cov0" title="0">{
+                conditions["company_id"] = r.CompanyID
+        }</span>
+
+        <span class="cov0" title="0">if r.Email != "" </span><span class="cov0" title="0">{
+                conditions["email"] = r.Email
+        }</span>
+
+        <span class="cov0" title="0">if r.Password != "" </span><span class="cov0" title="0">{
+                conditions["password"] = r.Password
+        }</span>
+
+        <span class="cov0" title="0">return conditions</span>
+}
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package user
+
+import (
+        "git.legchelife.ru/root/template/pkg/models/context"
+        "git.legchelife.ru/root/template/pkg/upper"
+        "github.com/upper/db/v4"
+)
+
+//go:generate mockgen -source=user_param.go -destination=./mock/user_param_mock.go -package=user_mock
+type IParam interface {
+        GetList(ctx *context.Base, id int) ([]Param, error)
+}
+
+type Param struct {
+        db     db.Session
+        ID     int    `db:"id,omitempty" json:"id" swaggerignore:"true"`
+        UserID int    `db:"user_id" json:"user_id"`
+        Name   string `db:"name" json:"name"`
+}
+
+func (r *Param) GetList(ctx *context.Base, id int) ([]Param, error) <span class="cov0" title="0">{
+        ctx.SetTimeout(3)
+        request, err := upper.DoRequest[[]Param](ctx, func() ([]Param, error) </span><span class="cov0" title="0">{
+                var userParams = make([]Param, 0)
+                session := r.db.Collection("user_params")
+                result := session.Find(db.Cond{"user_id": id})
+                err := result.All(&amp;userParams)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                <span class="cov0" title="0">return userParams, nil</span>
+        })
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return *request, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package user
+
+import "github.com/upper/db/v4"
+
+type UserPramFilter struct {
+        Name      string `json:"name" db:"name"`
+        CompanyID int    `json:"company_id" db:"company_id" swaggerignore:"true"`
+        Email     string `json:"email" db:"email"`
+        Password  string `json:"password" db:"password"`
+}
+
+// Conditions возвращает условия для фильтрации для upper запроса в базу данных.
+func (r *UserPramFilter) Conditions() db.Cond <span class="cov0" title="0">{
+        conditions := db.Cond{}
+
+        if r.Name != "" </span><span class="cov0" title="0">{
+                conditions["name"] = r.Name
+        }</span>
+
+        <span class="cov0" title="0">if r.CompanyID != 0 </span><span class="cov0" title="0">{
+                conditions["company_id"] = r.CompanyID
+        }</span>
+
+        <span class="cov0" title="0">if r.Email != "" </span><span class="cov0" title="0">{
+                conditions["email"] = r.Email
+        }</span>
+
+        <span class="cov0" title="0">if r.Password != "" </span><span class="cov0" title="0">{
+                conditions["password"] = r.Password
+        }</span>
+
+        <span class="cov0" title="0">return conditions</span>
+}
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package user
+
+import (
+        "fmt"
+        "git.legchelife.ru/root/template/pkg/models/context"
+        "git.legchelife.ru/root/template/pkg/upper"
+        "github.com/golang-jwt/jwt/v5"
+        "github.com/sirupsen/logrus"
+        "math/rand"
+        "os"
+        "time"
+)
+
+//go:generate mockgen -source=user_token.go -destination=./mock/user_token_mock.go -package=user_mock
+type IToken interface {
+        Create(ctx *context.Base, userID, companyID int) (*Token, error)
+}
+
+type Token struct {
+        Access  AccessToken  `json:"access"`
+        Refresh RefreshToken `json:"refresh"`
+}
+
+type AccessToken struct {
+        Token string `json:"token"`
+        Hours int    `json:"hours"`
+}
+
+type RefreshToken struct {
+        Token string `json:"token"`
+        Hours int    `json:"hours"`
+}
+
+// Create создает модель Tokens.
+func (r *Token) Create(ctx *context.Base, uid, cid int) (*Token, error) <span class="cov0" title="0">{
+        ctx.SetTimeout(3)
+        request, err := upper.DoRequest[*Token](ctx, func() (*Token, error) </span><span class="cov0" title="0">{
+                access := AccessToken{}
+                access.create(uid, cid)
+
+                refresh := RefreshToken{}
+                refresh.create()
+
+                model := Token{
+                        Access:  access,
+                        Refresh: refresh,
+                }
+
+                return &amp;model, nil
+        }</span>)
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return *request, nil</span>
+}
+
+// create создает модель AccessToken.
+func (r *AccessToken) create(uid, cid int) <span class="cov0" title="0">{
+        hours := 12
+        claims := jwt.MapClaims{
+                "id":  uid,
+                "cid": cid,
+                "nbf": time.Now().Unix(),
+                "exp": time.Now().Add(time.Hour * time.Duration(hours)).Unix(),
+        }
+
+        token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+        r.Hours = hours
+        secret, ok := os.LookupEnv("SECRET")
+        if !ok </span><span class="cov0" title="0">{
+                logrus.Error("SECRET not env")
+        }</span>
+        <span class="cov0" title="0">r.Token, _ = token.SignedString([]byte(secret))</span>
+}
+
+// create создает модель RefreshToken.
+func (r *RefreshToken) create() <span class="cov0" title="0">{
+        length := 24
+        chars := "abcdefghijklmnopqrstuvwxyz0123456789"
+        charSet := []rune(chars)
+        var result string
+
+        for i := 0; i &lt; length; i++ </span><span class="cov0" title="0">{
+                result += string(charSet[rand.Intn(len(charSet))])
+        }</span>
+
+        <span class="cov0" title="0">currentTime := time.Now().Format("20060102150405")
+        result = fmt.Sprintf("%s%s", currentTime, result[:length-len(currentTime)])
+
+        r.Hours = 24 * 30
+        r.Token = result</span>
+}
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package uc
+
+import (
+        "git.legchelife.ru/root/template/internal/repo"
+        "git.legchelife.ru/root/template/internal/usecase/module/section"
+        "git.legchelife.ru/root/template/internal/usecase/module/user"
+)
+
+type Repo struct {
+        repo        *repo.Repo
+        UserRepo    *uc_user.UserRepo
+        SectionRepo *uc_section.Section
+}
+
+// New -.
+func New(repo *repo.Repo) *Repo <span class="cov8" title="1">{
+
+        return &amp;Repo{
+                repo:        repo,
+                UserRepo:    uc_user.New(repo),
+                SectionRepo: uc_section.New(repo),
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package uc_section
+
+import (
+        "git.legchelife.ru/root/template/internal/repo"
+        rp_section "git.legchelife.ru/root/template/internal/repo/section"
+        "git.legchelife.ru/root/template/pkg/models/context"
+)
+
+type Section struct {
+        repo *repo.Repo
+}
+
+func New(repo *repo.Repo) *Section <span class="cov8" title="1">{
+        return &amp;Section{
+                repo: repo,
+        }
+}</span>
+
+// GetList получает список моделей Section из репозитория.
+func (uc *Section) GetList(ctx *context.Base) ([]rp_section.Section, error) <span class="cov0" title="0">{
+        //ctx.SetTimeout(3)
+
+        re, err := uc.repo.SectionRepo.GetList(ctx)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span> else<span class="cov0" title="0"> {
+                return re, nil
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package uc_user
+
+import (
+        "git.legchelife.ru/root/template/internal/repo"
+        "git.legchelife.ru/root/template/internal/repo/user"
+        "git.legchelife.ru/root/template/pkg/models/context"
+)
+
+type Params struct {
+        repo *repo.Repo
+}
+
+func NewParams(repo *repo.Repo) *Params <span class="cov8" title="1">{
+        return &amp;Params{
+                repo: repo,
+        }
+}</span>
+
+// GetList - метод получения списка параметров пользователя.
+func (uc *Params) GetList(ctx *context.Base, id int) ([]user.Param, error) <span class="cov8" title="1">{
+        //ctx.SetTimeout(3)
+
+        //re, err := uc.repo.User.Params(uc.repo.DB).GetList(ctx, id)
+        re, err := uc.repo.UserRepo.Param.GetList(ctx, id)
+        if err != nil </span><span class="cov8" title="1">{
+                return nil, err
+        }</span> else<span class="cov8" title="1"> {
+                return re, nil
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package uc_user
+
+import "git.legchelife.ru/root/template/internal/repo"
+
+type UserRepo struct {
+        User  *User
+        Param *Params
+        Token *Token
+}
+
+func New(repo *repo.Repo) *UserRepo <span class="cov8" title="1">{
+        return &amp;UserRepo{
+                User:  NewUser(repo),
+                Param: NewParams(repo),
+                Token: NewToken(repo),
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">package uc_user
+
+import (
+        "errors"
+        "git.legchelife.ru/root/template/internal/repo"
+        "git.legchelife.ru/root/template/internal/repo/user"
+        "git.legchelife.ru/root/template/pkg/models/context"
+)
+
+type Token struct {
+        repo *repo.Repo
+}
+
+func NewToken(repo *repo.Repo) *Token <span class="cov8" title="1">{
+        return &amp;Token{repo: repo}
+}</span>
+
+// Get - метод получения токена user.Tokens по email и password. (авторизация)
+func (uc *Token) Get(ctx *context.Base, email, password string) (*user.Token, error) <span class="cov0" title="0">{
+        ctx.SetTimeout(3)
+
+        filter := user.UserFilter{
+                Email:    email,
+                Password: password,
+        }
+
+        users, err := uc.repo.UserRepo.User.GetList(ctx, filter)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">if len(users) == 0 </span><span class="cov0" title="0">{
+                err := errors.New("пользователь не найден или неверный пароль")
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">if len(users) &gt; 1 </span><span class="cov0" title="0">{
+                err := errors.New("найдено более одного пользователя")
+                return nil, err
+        }</span>
+
+        //token, err := uc.repo.User.Tokens().Create(ctx, users[0].ID, users[0].CompanyID)
+        <span class="cov0" title="0">token, err := uc.repo.UserRepo.Token.Create(ctx, users[0].ID, users[0].CompanyID)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">users[0].RefreshToken = &amp;token.Refresh.Token
+
+        _, err = uc.repo.UserRepo.User.Put(ctx, &amp;users[0])
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return token, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">package uc_user
+
+import (
+        "git.legchelife.ru/root/template/internal/repo"
+        "git.legchelife.ru/root/template/internal/repo/user"
+        "git.legchelife.ru/root/template/pkg/models/context"
+)
+
+type User struct {
+        repo *repo.Repo
+        //Params *Params
+        //Token  *Token
+}
+
+func NewUser(repo *repo.Repo) *User <span class="cov8" title="1">{
+        return &amp;User{
+                repo: repo,
+        }
+}</span>
+
+// Get получает модель User из репозитория по ID.
+func (uc *User) Get(ctx *context.Base, id int) (*user.User, error) <span class="cov8" title="1">{
+        //ctx.SetTimeout(3)
+        re, err := uc.repo.UserRepo.User.Get(ctx, id)
+        if err != nil </span><span class="cov8" title="1">{
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">return re, nil</span>
+}
+
+// GetList получает список моделей User из репозитория, доступен фильтр user.UserFilter для поиска.
+func (uc *User) GetList(ctx *context.Base, filter user.UserFilter) ([]user.User, error) <span class="cov8" title="1">{
+        //ctx.SetTimeout(3)
+        re, err := uc.repo.UserRepo.User.GetList(ctx, filter)
+        if err != nil </span><span class="cov8" title="1">{
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">return re, nil</span>
+}
+
+// Post создает новую модель User в репозитории.
+func (uc *User) Post(ctx *context.Base, u user.User) (*int, error) <span class="cov8" title="1">{
+        //ctx.SetTimeout(3)
+        re, err := uc.repo.UserRepo.User.Post(ctx, u)
+        if err != nil </span><span class="cov8" title="1">{
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">return re, nil</span>
+}
+
+// Put обновляет модель User в репозитории.
+func (uc *User) Put(ctx *context.Base, user *user.User) (bool, error) <span class="cov8" title="1">{
+        //ctx.SetTimeout(3)
+        re, err := uc.repo.UserRepo.User.Put(ctx, user)
+        if err != nil </span><span class="cov8" title="1">{
+                return false, err
+        }</span>
+        <span class="cov8" title="1">return re, nil</span>
+}
+
+// Delete удаляет модель User из репозитория по ID.
+func (uc *User) Delete(ctx *context.Base, id int) (bool, error) <span class="cov8" title="1">{
+        //ctx.SetTimeout(3)
+        re, err := uc.repo.UserRepo.User.Delete(ctx, id)
+        if err != nil </span><span class="cov8" title="1">{
+                return false, err
+        }</span>
+        <span class="cov8" title="1">return re, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package context
+
+import (
+        "context"
+        "fmt"
+        "git.legchelife.ru/root/template/pkg/security/jwt"
+        "github.com/gin-gonic/gin"
+        "reflect"
+        "time"
+)
+
+type Base struct {
+        Context context.Context
+        Cancel  context.CancelFunc
+        PID     int         `json:"pID"`
+        Payload jwt.Payload `json:"payload"`
+}
+
+// Create создает кастомный контекст.
+// Контектс содержит:
+// - контекст (базовый контекст)
+// - PID (ID пользователя)
+// - Payload (полезная нагрузка user.Tokens)
+func (ctx Base) Create(c *gin.Context) Base <span class="cov0" title="0">{
+        ctx.Context = context.Background()
+
+        if c != nil </span><span class="cov0" title="0">{
+                ctx.PID = c.GetInt("pID")
+                payload, ok := c.Get("payload")
+                if !ok </span><span class="cov0" title="0">{
+                        fmt.Println("Warning: 'payload' not found in context")
+                        ctx.Payload = jwt.Payload{} // или установите ваш дефолтный payload
+                }</span> else<span class="cov0" title="0"> {
+                        // Проверяем тип с использованием reflect
+                        if reflect.TypeOf(payload) == reflect.TypeOf(jwt.Payload{}) </span><span class="cov0" title="0">{
+                                ctx.Payload = payload.(jwt.Payload)
+                        }</span> else<span class="cov0" title="0"> {
+                                fmt.Println("Warning: 'payload' has an unexpected type in context")
+                                ctx.Payload = jwt.Payload{} // или установите ваш дефолтный payload
+                        }</span>
+                }
+        }
+
+        <span class="cov0" title="0">return ctx</span>
+}
+
+// SetTimeout устанавливает таймаут для контекста, если он еще не установлен.
+// Контекст может быть установлен:
+// - в юзкейсе (для всех запросов в юзкейсе)
+// - в репозитории (для конкретного запроса)
+func (ctx *Base) SetTimeout(second float32) <span class="cov0" title="0">{
+        _, ok := ctx.Context.Deadline()
+        if !ok </span><span class="cov0" title="0">{
+                tm := time.Duration(second) * time.Second
+                ctx.Context, ctx.Cancel = context.WithTimeout(ctx.Context, tm)
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">package models
+
+type ErrorMultiple struct {
+        SoftErrors    []string `json:"soft_errors" 2:"error 1, error 2"` // Не критичные ошибки
+        CriticalError []string `json:"critical_error" 2:"error 1"`       // Критичные ошибки
+}
+
+func (e *ErrorMultiple) AddSoft(err error) <span class="cov0" title="0">{
+        e.SoftErrors = append(e.SoftErrors, err.Error())
+}</span>
+
+func (e *ErrorMultiple) AddCritical(err error) <span class="cov0" title="0">{
+        e.CriticalError = append(e.CriticalError, err.Error())
+}</span>
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">package rechan
+
+import (
+        "errors"
+        "github.com/upper/db/v4"
+)
+
+type Base struct {
+        Data  interface{}
+        Error error
+}
+
+func (*Base) SendData(reChan chan Base, data interface{}) <span class="cov0" title="0">{
+        if reChan == nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+        <span class="cov0" title="0">select </span>{
+        case _, ok := &lt;-reChan:<span class="cov0" title="0">
+                if !ok </span><span class="cov0" title="0">{
+                        return
+                }</span>
+        default:<span class="cov0" title="0">
+                reChan &lt;- Base{Data: data}</span>
+        }
+}
+
+func (*Base) SendError(reChan chan Base, title string, err error) <span class="cov0" title="0">{
+        if reChan == nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+        <span class="cov0" title="0">select </span>{
+        case _, ok := &lt;-reChan:<span class="cov0" title="0">
+                if !ok </span><span class="cov0" title="0">{
+                        return
+                }</span>
+        default:<span class="cov0" title="0">
+                reChan &lt;- Base{Error: errorTranslate(err)}</span>
+        }
+}
+
+func errorTranslate(err error) error <span class="cov0" title="0">{
+        switch </span>{
+        case errors.Is(err, db.ErrNoMoreRows):<span class="cov0" title="0">
+                err = errors.New("пользователь не найден")</span>
+        }
+
+        <span class="cov0" title="0">return err</span>
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package rechan
+
+import "git.legchelife.ru/root/template/pkg/models"
+
+type Multiple struct {
+        Data   interface{}
+        Errors models.ErrorMultiple
+}
+
+func (*Multiple) SendError(reChan chan Multiple, errorMultiple models.ErrorMultiple) <span class="cov0" title="0">{
+        if reChan == nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+        <span class="cov0" title="0">select </span>{
+        case _, ok := &lt;-reChan:<span class="cov0" title="0">
+                if !ok </span><span class="cov0" title="0">{
+                        return
+                }</span>
+        default:<span class="cov0" title="0">
+                if len(errorMultiple.CriticalError) &gt; 0 </span><span class="cov0" title="0">{
+                        reChan &lt;- Multiple{Errors: errorMultiple}
+                        return
+                }</span> else<span class="cov0" title="0"> {
+                        return
+                }</span>
+        }
+}
+
+func (*Multiple) SendData(reChan chan Multiple, data interface{}) <span class="cov0" title="0">{
+        if reChan == nil </span><span class="cov0" title="0">{
+                return
+        }</span>
+        <span class="cov0" title="0">select </span>{
+        case _, ok := &lt;-reChan:<span class="cov0" title="0">
+                if !ok </span><span class="cov0" title="0">{
+                        return
+                }</span>
+        default:<span class="cov0" title="0">
+                reChan &lt;- Multiple{Data: data}</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">package jwt
+
+import (
+        "errors"
+        "git.legchelife.ru/root/template/pkg/models/response"
+        "github.com/gin-gonic/gin"
+        "github.com/golang-jwt/jwt/v5"
+        "os"
+)
+
+func SecurityJWT(section int) gin.HandlerFunc <span class="cov0" title="0">{
+        return func(c *gin.Context) </span><span class="cov0" title="0">{
+                tokenBearer := c.GetHeader("Authorization")
+                if tokenBearer == "" </span><span class="cov0" title="0">{
+                        err := errors.New("authorization required")
+                        c.AbortWithStatusJSON(401, response.Base{Data: nil, Error: err.Error()})
+                        return
+                }</span>
+
+                //очищаем токен от Bearer и получаем сам токен
+                // но сначала проверяем, что он начинается с Bearer
+                <span class="cov0" title="0">if len(tokenBearer) &lt; len("Bearer ") </span><span class="cov0" title="0">{
+                        err := errors.New("authorization required")
+                        c.AbortWithStatusJSON(401, response.Base{Data: nil, Error: err.Error()})
+                        return
+                }</span>
+                <span class="cov0" title="0">t := tokenBearer[len("Bearer "):]
+
+                token, err := jwt.Parse(t, func(token *jwt.Token) (interface{}, error) </span><span class="cov0" title="0">{
+                        if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok </span><span class="cov0" title="0">{
+                                err := errors.New("unexpected signing method" + token.Header["alg"].(string))
+                                return nil, err
+                        }</span>
+                        <span class="cov0" title="0">secret, ok := os.LookupEnv("SECRET")
+                        if !ok </span><span class="cov0" title="0">{
+                                err := errors.New("SECRET not found")
+                                return nil, err
+                        }</span>
+                        <span class="cov0" title="0">return []byte(secret), nil</span>
+                })
+
+                <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                        c.AbortWithStatusJSON(401, response.Base{Data: nil, Error: err.Error()})
+                        return
+                }</span>
+
+                <span class="cov0" title="0">if token.Valid </span><span class="cov0" title="0">{
+                        //добавляем sub в контекст
+                        if claims, ok := token.Claims.(jwt.MapClaims); ok &amp;&amp; token.Valid </span><span class="cov0" title="0">{
+
+                                if (int(claims["uab"].(float64)) &amp; (1 &lt;&lt; section)) == 0 </span><span class="cov0" title="0">{
+                                        err := errors.New("нет доступа к разделу")
+                                        c.AbortWithStatusJSON(401, response.Base{Data: nil, Error: err.Error()})
+                                        return
+                                }</span>
+
+                                <span class="cov0" title="0">payload := Payload{
+                                        ID:            int(claims["id"].(float64)),
+                                        UserAccessBit: int(claims["uab"].(float64)),
+                                        CompanyID:     int(claims["cid"].(float64)),
+                                        DateStart:     int(claims["nbf"].(float64)),
+                                        DateEnd:       int(claims["exp"].(float64)),
+                                }
+
+                                c.Set("payload", payload)</span>
+                        } else<span class="cov0" title="0"> {
+                                err = errors.New("не удалось обработать токен")
+                                c.AbortWithStatusJSON(401, gin.H{"error": err.Error()})
+                                return
+                        }</span>
+
+                } else<span class="cov0" title="0"> if errors.Is(err, jwt.ErrTokenMalformed) </span><span class="cov0" title="0">{
+                        err = errors.New("ошибка формата токена")
+                        c.AbortWithStatusJSON(401, gin.H{"error": err.Error()})
+                        return
+                }</span> else<span class="cov0" title="0"> if errors.Is(err, jwt.ErrTokenSignatureInvalid) </span><span class="cov0" title="0">{
+                        err = errors.New("неверная подпись токена")
+                        c.AbortWithStatusJSON(401, gin.H{"error": err.Error()})
+                        return
+                }</span> else<span class="cov0" title="0"> if errors.Is(err, jwt.ErrTokenExpired) || errors.Is(err, jwt.ErrTokenNotValidYet) </span><span class="cov0" title="0">{
+                        err = errors.New("токен просрочен или еще не активен")
+                        c.AbortWithStatusJSON(401, gin.H{"error": err.Error()})
+                        return
+                }</span> else<span class="cov0" title="0"> {
+                        err = errors.New("не удалось обработать токен")
+                        c.AbortWithStatusJSON(401, gin.H{"error": err.Error()})
+                        return
+                }</span>
+                <span class="cov0" title="0">c.Next()</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">package upper
+
+import (
+        "git.legchelife.ru/root/template/pkg/models/context"
+        "git.legchelife.ru/root/template/pkg/models/rechan"
+)
+
+// DoRequest - метод обработки запросов.
+// Принимает дженерик типа ответа, контекст и функцию запроса которую запускает в горутине.
+// В основном используется для запросов к БД.
+func DoRequest[T any](ctx *context.Base, requestFunction func() (T, error)) (*T, error) <span class="cov0" title="0">{
+        reChan := make(chan rechan.Base)
+        defer close(reChan)
+        go handleRequest(reChan, requestFunction)
+        return handleResponse[T](ctx, reChan)
+}</span>
+
+// handleRequest функция обработки запроса, принимает канал для ответа и функцию запроса.
+func handleRequest[T any](reChan chan rechan.Base, requestFunction func() (T, error)) <span class="cov0" title="0">{
+        c := rechan.Base{}
+        data, err := requestFunction()
+        if err != nil </span><span class="cov0" title="0">{
+                c.SendError(reChan, "Error: ", err)
+        }</span> else<span class="cov0" title="0"> {
+                c.SendData(reChan, data)
+        }</span>
+}
+
+// handleResponse функция обработки ответа, принимает контекст и канал для ответа.
+func handleResponse[T any](ctx *context.Base, reChan chan rechan.Base) (*T, error) <span class="cov0" title="0">{
+        select </span>{
+        case &lt;-ctx.Context.Done():<span class="cov0" title="0">
+                return nil, ctx.Context.Err()</span>
+        case re := &lt;-reChan:<span class="cov0" title="0">
+                if re.Error != nil </span><span class="cov0" title="0">{
+                        return nil, re.Error
+                }</span> else<span class="cov0" title="0"> {
+                        r := re.Data.(T)
+                        return &amp;r, nil
+                }</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">package upper
+
+import (
+        "github.com/upper/db/v4"
+        "github.com/upper/db/v4/adapter/mysql"
+        "github.com/upper/db/v4/adapter/postgresql"
+        "time"
+)
+
+// NewSQL -.
+func NewSQL(dbURL string) (db.Session, error) <span class="cov0" title="0">{
+        settings, _ := mysql.ParseURL(dbURL)
+        sess, err := mysql.Open(settings)
+        sess.SetConnMaxLifetime(time.Minute * 4)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">if err := sess.Ping(); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return sess, nil</span>
+}
+
+// NewPostgres -.
+func NewPostgres(dbURL string) (db.Session, error) <span class="cov0" title="0">{
+        settings, _ := postgresql.ParseURL(dbURL)
+        sess, err := postgresql.Open(settings)
+        sess.SetConnMaxLifetime(time.Minute * 4)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">if err := sess.Ping(); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov0" title="0">return sess, nil</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

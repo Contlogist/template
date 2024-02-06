@@ -10,7 +10,8 @@ NAME:=template
 DOCKER_REPOSITORY:=telepro
 HARBOR_ADDRESS:=harbor.legchelife.ru:8443
 DOCKER_IMAGE_NAME:=$(DOCKER_REPOSITORY)/$(NAME)
-VERSION := $(shell $(YQ) eval '.app.version' config/config.yml)
+export VERSION := $(shell grep '^APP_VERSION=' .env | awk -F= '{print $$2}')
+
 
 
 harbor-latest:
@@ -82,14 +83,24 @@ mock: ### run mockery
 	mockery --all -r --case snake
 .PHONY: mock
 
-migrate-create:  ### create new migration
-	migrate create -ext sql -dir migrations 'migrate_name'
+migrate-create:  ### create new migration NAME=...
+	migrate create -ext sql -dir migrations/$(VERSION) $(NAME)
 .PHONY: migrate-create
 
 migrate-up: ### migration up
 	migrate -path migrations/$(VERSION) -database '$(PG_URL)?sslmode=disable' up
 .PHONY: migrate-up
 
+migrate-force: ### migration force
+	migrate -path migrations/$(VERSION) -database '$(PG_URL)?sslmode=disable' force $(FORCE)
+.PHONY: migrate-force
+
 migrate-down: ### migration down
 	migrate -path migrations/$(VERSION) -database '$(PG_URL)?sslmode=disable' down
 .PHONY: migrate-down
+
+.PHONY: cover
+cover:
+	go test -short -count=1 -race -coverprofile=coverage.out ./...
+	go tool cover -html=coverage.out
+	rm coverage.out

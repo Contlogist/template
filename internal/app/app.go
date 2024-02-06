@@ -3,8 +3,9 @@ package app
 
 import (
 	"fmt"
-	"git.legchelife.ru/root/template/internal/repo/db"
+	"git.legchelife.ru/root/template/internal/repo"
 	"git.legchelife.ru/root/template/internal/usecase"
+	natsconnect "git.legchelife.ru/root/template/pkg/nats"
 	"git.legchelife.ru/root/template/pkg/upper"
 	"github.com/sirupsen/logrus"
 	"os"
@@ -27,7 +28,7 @@ const (
 
 // Run creates objects via constructors.
 func Run(cfg *config.Config) {
-	l := logger.New(cfg.Log.Level)
+	l := logger.New()
 
 	// DB
 	dbClient, err := upper.NewPostgres(cfg.PG.URL)
@@ -36,14 +37,18 @@ func Run(cfg *config.Config) {
 	}
 
 	// Repository
-	repo := repo_db.New(&dbClient)
+	repo := repo.New(&dbClient)
 
 	// Use case
 	useCase := uc.New(repo)
 
 	//NATS Server
-	//server, err := natsconnect.Connect(cfg.Nats.URL)
-	//natsconnect.New(server, *useCase)
+	server, err := natsconnect.Connect(cfg.Nats.URL)
+	if err != nil {
+		l.Error(fmt.Errorf("app - Run - natsConnect.Connect - params: %w", err), logger.Data{Module: "app", Method: "Run", Action: logger.Parse, Params: map[string]interface{}{"signal": err}})
+		return
+	}
+	natsconnect.New(server, *useCase)
 
 	// HTTP Server
 	gin.SetMode(gin.ReleaseMode)
@@ -57,14 +62,14 @@ func Run(cfg *config.Config) {
 
 	select {
 	case s := <-interrupt:
-		l.Info("app - Run - signal: " + s.String())
+		l.Info("app - Run - signal - params:", logger.Data{Module: "app", Method: "Run", Action: logger.Parse, Params: map[string]interface{}{"signal": s}})
 	case err = <-httpServer.Notify():
-		l.Error(fmt.Errorf("app - Run - httpServer.Notify: %w", err))
+		l.Error(err, logger.Data{Module: "app", Method: "Run", Action: logger.Parse, Params: map[string]interface{}{"signal": err}})
 	}
 
 	// Shutdown
 	err = httpServer.Shutdown()
 	if err != nil {
-		l.Error(fmt.Errorf("app - Run - httpServer.Shutdown: %w", err))
+		l.Error(fmt.Errorf("app - Run - httpServer.Shutdown - params: %w", err), logger.Data{Module: "app", Method: "Run", Action: logger.Parse, Params: map[string]interface{}{"signal": err}})
 	}
 }

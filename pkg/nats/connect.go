@@ -15,17 +15,23 @@ type Server struct {
 }
 
 func Connect(url string) (nats.JetStreamContext, error) {
-	nc, _ := nats.Connect(url)
-	js, _ := nc.JetStream()
-	i, err := js.AddStream(&nats.StreamConfig{
+	nc, err := nats.Connect(url)
+	if err != nil {
+		return nil, err
+	}
+
+	js, err := nc.JetStream()
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = js.AddStream(&nats.StreamConfig{
 		Name:     "Template",
 		Subjects: []string{"Template.*"},
 		MaxBytes: 1024,
 	})
 	if err != nil {
-		logrus.Error("AddStream: ", err)
-	} else {
-		logrus.Info("AddStream: ", i)
+		return nil, err
 	}
 
 	return js, nil
@@ -43,10 +49,12 @@ func (s *Server) start(usecase uc.Repo) {
 	// создаем подписку на сообщения для адресата userServer
 
 	go func() {
-		sub, err := s.Js.SubscribeSync("Template")
+		sub, err := s.Js.SubscribeSync("Template.*")
 		if err != nil {
 			logrus.Error("SubscribeSync: ", err)
+			return
 		}
+
 		ctx := context.Background()
 		for {
 			select {
@@ -65,8 +73,10 @@ func (s *Server) start(usecase uc.Repo) {
 
 				// отправка подтверждения обработки сообщения
 				msg.Ack()
-				count, _ := s.Js.StreamInfo("Template")
-				logrus.Info("StreamInfo: ", count.State.Msgs)
+				_, err = s.Js.StreamInfo("Template")
+				if err != nil {
+					logrus.Error("StreamInfo: ", err)
+				}
 			}
 		}
 	}()

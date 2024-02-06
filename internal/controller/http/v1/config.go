@@ -8,12 +8,12 @@ type Request[T any] struct {
 	Data T `json:"data"`
 }
 
+// FromJSON парсит json в структуру
 func (r *Request[T]) FromJSON(data []byte) error {
 	return json.Unmarshal(data, r)
 }
 
 type Response struct {
-	Status string      `json:"status"`
-	Data   interface{} `json:"data"`
-	Error  interface{} `json:"error"`
+	Data  interface{} `json:"data"`
+	Error interface{} `json:"error"`
 }

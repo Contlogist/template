@@ -1,19 +1,22 @@
 package v1
 
 import (
+	"git.legchelife.ru/root/template/internal/controller/http/v1/module/section"
 	"git.legchelife.ru/root/template/internal/controller/http/v1/module/user"
 	"git.legchelife.ru/root/template/internal/usecase"
 	"git.legchelife.ru/root/template/pkg/logger"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/sirupsen/logrus"
 	"github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
 	"net/http"
+	"os"
 	"time"
 
 	// Swagger docs.
-	_ "git.legchelife.ru/root/template/docs"
+	docs "git.legchelife.ru/root/template/docs"
 )
 
 type EmptyBody struct{}
@@ -22,20 +25,26 @@ type EmptyBody struct{}
 // Swagger spec:
 // @title       TEMPLATE
 // @description Шаблон для создания нового сервиса
-// @version     $(VERSION)
 
 // @host        localhost:1000
 // @BasePath    /v1
 
-// @securityDefinitions.apikey Token-A
+// @securityDefinitions.apikey Authorization
 // @in header
-// @name Token-A
+// @name Authorization
 
 func NewRouter(
 	handler *gin.Engine,
 	l logger.Interface,
 	usecase uc.Repo,
 ) {
+
+	version, ok := os.LookupEnv("APP_VERSION")
+	if !ok || len(version) == 0 {
+		logrus.Error("APP_VERSION not set in env")
+	}
+
+	docs.SwaggerInfo.Version = version
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
@@ -63,5 +72,8 @@ func NewRouter(
 
 		//User
 		rt_user.Routes(h, usecase, l)
+
+		//Section
+		rt_section.Routes(h, usecase, l)
 	}
 }
